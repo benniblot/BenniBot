@@ -2,7 +2,7 @@ const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const { API_KEY } = require('../config.json');
 const YoutubeAPI = require('simple-youtube-api');
-const youtube = new YoutubeAPI(API_KEY);
+const youtube = new YoutubeAPI(process.env.api_key);
 
 module.exports = {
 	name: 'play',
