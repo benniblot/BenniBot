@@ -14,6 +14,7 @@ module.exports = {
 
 			dispatcher.on('finish', () => {
 				console.log('BenniBot stopped');
+				connection.disconnect();
 			});
 		} else {
 			message.reply('You need to join a voice channel first!');
