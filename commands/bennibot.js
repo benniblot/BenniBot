@@ -1,4 +1,4 @@
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 
 module.exports = {
 	name: 'bennibot',
@@ -7,11 +7,9 @@ module.exports = {
 	async execute(message) {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
+			console.log('BenniBot is EarRaping you :)');
 			const dispatcher = connection.play(ytdl('https://youtu.be/-HZE1XBqC6M', { filter: 'audioonly' }));
-			dispatcher.on('start', () => {
-				console.log('BenniBot is EarRaping you :)');
-			});
-
+			
 			dispatcher.on('finish', () => {
 				console.log('BenniBot stopped');
 				connection.disconnect();
