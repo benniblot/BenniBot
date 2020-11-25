@@ -1,10 +1,8 @@
 {
     "prefix": "&",
-    "token": "NjkyMjk2MDE2MTgyOTAyODE0.Xnsc6A.JmB82Ry5ccdj9WwRtg94J2fmQPU",
     "bot_info": {
         "name": "BenniBot",
         "version": "2.0.0"
     },
-    "API_KEY": "AIzaSyDDDYBTMtp3-_WGJ39mmv8k0XI4ghNF5pU",
     "inviteURL": "https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot"
 }
