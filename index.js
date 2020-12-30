@@ -15,17 +15,7 @@ const {
 client.login(process.env.token);
 
 client.once('ready', () => {
-	const today = new Date();
-	let year = today.getYear();
-	if (year < 1900) {
-		year += 1900;
-	}
-	const date = new Date('December 25, ' + year);
-	const diff = date.getTime() - today.getTime();
-	const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-	client.user.setActivity(days + ' until Christmas (24th)', {
-		type: 'PLAYING',
-	});
+	client.user.setActivity('2021 coming', { type: 'WATCHING' });
 	console.log(bot_info.name + ' V' + bot_info.version + ' started sucessfully!');
 });
 
