@@ -15,7 +15,7 @@ const {
 client.login(process.env.token);
 
 client.once('ready', () => {
-	client.user.setActivity('2021 coming', { type: 'WATCHING' });
+	client.user.setActivity('till COVID is over', { type: 'PLAYING' });
 	console.log(bot_info.name + ' V' + bot_info.version + ' started sucessfully!');
 });
 
