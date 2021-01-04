@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 
+const beta = false;
+
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
@@ -8,14 +10,22 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 const {
 	prefix,
-	token,
+	tokenb,
 	bot_info,
 } = require('./config.json');
 
-client.login(process.env.token);
+if (beta === false) {
+	client.login(process.env.token);
+} else if (beta === true) {
+	client.login(tokenb);
+	console.log('===BETA===');
+}
+
 
 client.once('ready', () => {
-	client.user.setActivity('till COVID is over', { type: 'PLAYING' });
+	client.user.setActivity('Version ' + bot_info.version, {
+		type: 'PLAYING',
+	});
 	console.log(bot_info.name + ' V' + bot_info.version + ' started sucessfully!');
 });
 
