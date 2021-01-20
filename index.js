@@ -11,6 +11,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 const {
 	prefix,
 	tokenb,
+	token,
 	bot_info,
 } = require('./config.json');
 

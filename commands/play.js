@@ -34,7 +34,7 @@ module.exports = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,
 						duration: songData.videoDetails.lengthSeconds,
-						thumbnail: songData.videoDetails.thumbnail.thumbnails[3].url,
+						thumbnail: songData.videoDetails.thumbnails[3].url,
 					};
 				} catch (error) {
 					console.error(Error);
@@ -49,7 +49,7 @@ module.exports = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,
 						duration: songData.videoDetails.lengthSeconds,
-						thumbnail: songData.videoDetails.thumbnail.thumbnails[3].url,
+						thumbnail: songData.videoDetails.thumbnails[3].url,
 					};
 				} catch (error) {
 					console.log(error);
@@ -60,7 +60,6 @@ module.exports = {
 			const seconds = song.duration - minutes * 60;
 			const connection = await message.member.voice.channel.join().catch();
 			const stream = connection.play(await ytdl(song.url), {
-				highWaterMark: 1 << 25,
 				filter: 'audioonly',
 				type: 'opus',
 				quality: 'highestaudio',

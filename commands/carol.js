@@ -6,7 +6,7 @@ module.exports = {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
 			console.log('BenniBot is playing Carol :)');
-			const dispatcher = connection.play('./images./carol.mp3');
+			const dispatcher = connection.play('./media./carol.mp3');
 
 			dispatcher.on('finish', () => {
 				connection.disconnect();
