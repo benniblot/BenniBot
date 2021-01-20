@@ -10,15 +10,13 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 const {
 	prefix,
-	tokenb,
-	token,
 	bot_info,
 } = require('./config.json');
 
 if (beta === false) {
 	client.login(process.env.token);
 } else if (beta === true) {
-	client.login(tokenb);
+	client.login(process.env.tokenb);
 	console.log('===BETA===');
 }
 
