@@ -26,6 +26,7 @@
     "sax": "^1.2.4",
     "simple-youtube-api": "^5.2.1",
     "sodium": "^3.0.2",
+    "ytdl-core": "^4.4.5",
     "ytdl-core-discord": "^1.2.5"
   }
 }
