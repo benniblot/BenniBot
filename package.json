@@ -14,10 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
-    "canvas": "^2.6.1",
+    "canvas": "^2.7.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "ffmpeg-static": "^4.2.7",
     "html-entities": "^1.4.0",
     "m3u8stream": "^0.7.1",
