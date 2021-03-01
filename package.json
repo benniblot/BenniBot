@@ -16,6 +16,7 @@
     "@discordjs/opus": "^0.3.3",
     "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "eslint": "^7.20.0",
     "ffmpeg-static": "^4.2.7",
     "html-entities": "^1.4.0",
@@ -26,6 +27,7 @@
     "sax": "^1.2.4",
     "simple-youtube-api": "^5.2.1",
     "sodium": "^3.0.2",
+    "windows-build-tools": "^5.2.2",
     "ytdl-core": "^4.4.5",
     "ytdl-core-discord": "^1.2.5"
   }
