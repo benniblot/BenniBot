@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config({ path: 'config.env' });
 const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const YoutubeAPI = require('simple-youtube-api');
