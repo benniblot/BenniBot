@@ -4,7 +4,7 @@ module.exports = {
 	name: 'stop',
 	description: 'Stops the current playing music and leaves the Voice Channel',
 	args: false,
-	aliases: ['s'],
+	aliases: ['s', 'leave', 'l'],
 	async execute(message) {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
