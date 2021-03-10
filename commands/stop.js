@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'stop',
 	description: 'Stops the current playing music and leaves the Voice Channel',
-	args: false,
+	args: true,
 	aliases: ['s', 'leave', 'l'],
 	async execute(message) {
 		if (message.member.voice.channel) {
