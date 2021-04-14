@@ -13,9 +13,11 @@ module.exports = {
 				.setColor('#0000ff')
 				.setTitle('BenniBot')
 				.setTimestamp()
-				.addFields(
-					{ name: 'Now playing:', value: 'stopped playing music and left the Voice Channel', inline: true },
-				);
+				.addFields({
+					name: 'Now playing:',
+					value: 'stopped playing music and left the Voice Channel',
+					inline: true,
+				});
 			message.channel.send(stopped);
 			connection.disconnect();
 		} else {

@@ -8,7 +8,9 @@ module.exports = {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
 			console.log('BenniBot EarRaped');
-			const dispatcher = connection.play(ytdl('https://youtu.be/-HZE1XBqC6M', { filter: 'audioonly' }));
+			const dispatcher = connection.play(ytdl('https://youtu.be/-HZE1XBqC6M', {
+				filter: 'audioonly',
+			}));
 
 			dispatcher.on('finish', () => {
 				connection.disconnect();

@@ -7,7 +7,9 @@ module.exports = {
 	async execute(message) {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
-			const dispatcher = connection.play(ytdl('https://www.youtube.com/watch?v=Dzdg-0vldW4', { filter: 'audioonly' }));
+			const dispatcher = connection.play(ytdl('https://www.youtube.com/watch?v=Dzdg-0vldW4', {
+				filter: 'audioonly',
+			}));
 			dispatcher.on('start', () => {
 				console.log('BenniBot is hearing your beautiful voice <3');
 			});
