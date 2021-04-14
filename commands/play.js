@@ -17,17 +17,17 @@ module.exports = {
 	name: 'play',
 	description: 'Joins your current Voice Channel and starts playing your selected music',
 	args: true,
-	usage: '<youtube link> or <name>',
+	usage: '<URL> or <name>',
 	aliases: ['p'],
 	async execute(message, args) {
 
 		if (message.member.voice.channel) {
 			const targetsong = args.join(' ');
-			const videoPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
-			const urlcheck = videoPattern.test(args[0]);
+			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
+			const YoutubeCheck = YoutubeCheckPattern.test(args[0]);
 			let songData = null;
 			let song = null;
-			if (urlcheck) {
+			if (YoutubeCheck) {
 				try {
 					songData = await ytdl.getInfo(args[0]);
 					song = {
