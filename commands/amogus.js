@@ -11,6 +11,7 @@ module.exports = {
 					filter: 'audioonly',
 				}));
 				console.log('Amogus');
+				dispatcher.setVolume(2);
 				dispatcher.on('finish', () => {
 					connection.disconnect();
 				});
