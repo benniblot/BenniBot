@@ -1,6 +1,7 @@
 require('dotenv').config({
 	path: 'config.env',
 });
+const { color } = require('../config.json');
 const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const YoutubeAPI = require('simple-youtube-api');
@@ -67,7 +68,7 @@ module.exports = {
 			stream.on('start', () => {
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + message.guild.name + ': playing - ' + song.title);
 				const playing = new Discord.MessageEmbed()
-					.setColor('#42b3f5')
+					.setColor(color)
 					.setTitle('BenniBot');
 				if (minutes === 0 && seconds === 0) {
 					playing.setFooter('Live');
@@ -87,7 +88,7 @@ module.exports = {
 			stream.on('finish', () => {
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + message.guild.name + ': Stopped playing Music and left the Voice Channel');
 				const stopped = new Discord.MessageEmbed()
-					.setColor('#00ff00')
+					.setColor(color)
 					.setTitle('BenniBot')
 					.setFooter(song.url)
 					.setTimestamp()

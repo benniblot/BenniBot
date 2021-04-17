@@ -25,7 +25,7 @@ if (beta === false) {
 
 
 client.once('ready', () => {
-	// client.user.setActivity('Version ' + bot_info.version, {
+	// client.user.setActivity('BETA ' + bot_info.version, {
 	client.user.setActivity('RIP BeniBlot V2', {
 		type: 'PLAYING',
 	});

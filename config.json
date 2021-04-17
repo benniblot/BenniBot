@@ -1,8 +1,9 @@
 {
-    "prefix": "&",
+    "prefix": ".",
     "bot_info": {
         "name": "BenniBot",
-        "version": "2.0.2.0"
+        "version": "b3.0.2.0"
     },
-    "inviteURL": "https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot"
+    "inviteURL": "https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot",
+    "color": "BLUE"
 }
