@@ -1,7 +1,9 @@
 require('dotenv').config({
 	path: 'config.env',
 });
-const { color } = require('../config.json');
+const {
+	color,
+} = require('../config.json');
 const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const YoutubeAPI = require('simple-youtube-api');
