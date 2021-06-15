@@ -4,8 +4,6 @@ require('dotenv').config({
 const Discord = require('discord.js');
 const fs = require('fs');
 
-const beta = false;
-
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
@@ -16,13 +14,7 @@ const {
 	bot_info,
 } = require('./config.json');
 
-if (beta === false) {
-	client.login(process.env.token);
-} else if (beta === true) {
-	client.login(process.env.tokenb);
-	console.log('===BETA===');
-}
-
+client.login(process.env.token);
 
 client.once('ready', () => {
 	client.user.setActivity('BETA ' + bot_info.version, {
