@@ -11,7 +11,6 @@ module.exports = {
 			const dispatcher = connection.play(ytdl('https://youtu.be/-HZE1XBqC6M', {
 				filter: 'audioonly',
 			}));
-
 			dispatcher.on('finish', () => {
 				connection.disconnect();
 			});
