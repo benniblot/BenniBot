@@ -1,4 +1,4 @@
 node_modules
 .eslintrc.json
-config.env
+.env
 BenniBotPP.ico
