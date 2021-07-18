@@ -17,7 +17,7 @@ const {
 client.login(process.env.token);
 
 client.once('ready', () => {
-	client.user.setActivity('BETA ' + bot_info.version, {
+	client.user.setActivity(bot_info.version, {
 		type: 'PLAYING',
 	});
 	console.log(bot_info.name + ' V' + bot_info.version + ' started sucessfully!');
