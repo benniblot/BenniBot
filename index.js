@@ -16,10 +16,10 @@ const {
 	bot_info,
 } = require('./config.json');
 
-client.login(process.env.tokenb);
+client.login(process.env.token);
 
 client.once('ready', () => {
-	client.user.setActivity(bot_info.version, {
+	client.user.setActivity('WARTUNG: ' + bot_info.version, {
 		type: 'PLAYING',
 	});
 	console.log(`${client.user.tag}` + ' Version ' + bot_info.version + ' started sucessfully!');

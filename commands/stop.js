@@ -7,7 +7,7 @@ module.exports = {
 	aliases: ['s', 'leave', 'l'],
 	async execute(message) {
 		if (message.member.voice.channel) {
-			const connection = await message.member.voice.channel.join();
+			const connection = await message.member.voiceChannel.join();
 			console.log(message.guild.name + ': Stopped playing Music and left the Voice Channel');
 			const stopped = new Discord.MessageEmbed()
 				.setColor('#0000ff')

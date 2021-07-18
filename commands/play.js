@@ -6,6 +6,7 @@ const {
 } = require('../config.json');
 const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
+const DiscordVoice = require('@discordjs/voice');
 const YoutubeAPI = require('simple-youtube-api');
 const youtube = new YoutubeAPI(process.env.api_key);
 const day = new Date();
@@ -16,6 +17,7 @@ const d = String(day.getDate()).padStart(2, '0');
 const mo = String(day.getMonth() + 1).padStart(2, '0');
 const y = String(day.getFullYear()).padStart(2, '0');
 
+
 module.exports = {
 	name: 'play',
 	description: 'Joins your current Voice Channel and starts playing your selected music',
@@ -24,7 +26,7 @@ module.exports = {
 	aliases: ['p'],
 	async execute(message, args) {
 
-		if (message.member.voice.channel) {
+		if (message.member.VoiceChannel) {
 			const targetsong = args.join(' ');
 			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
 			const YoutubeCheck = YoutubeCheckPattern.test(args[0]);
@@ -61,7 +63,7 @@ module.exports = {
 
 			const minutes = Math.floor(song.duration / 60);
 			const seconds = song.duration - minutes * 60;
-			const connection = await message.member.voice.channel.join().catch();
+			const connection = await message.member.voiceChannel.join().catch();
 			const stream = connection.play(await ytdl(song.url), {
 				filter: 'audioonly',
 				type: 'opus',
