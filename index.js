@@ -17,7 +17,7 @@ const {
 	bot_info,
 } = require('./config.json');
 
-client.login(process.env.tokenb);
+client.login(process.env.token);
 
 client.once('ready', () => {
 	client.user.setActivity('WARTUNG: ' + bot_info.version, {

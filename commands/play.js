@@ -4,7 +4,8 @@ require('dotenv').config({
 const {
 	color,
 } = require('../config.json');
-const ytdl = require('ytdl-core-discord');
+const ytdl = require('ytdl-core');
+// const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const {
 	AudioPlayerStatus,
@@ -74,21 +75,11 @@ module.exports = {
 				guildId: message.member.guild.id,
 				adapterCreator: message.member.voice.channel.guild.voiceAdapterCreator,
 			});
-
-			connection.on('stateChange', (oldState, newState) => {
-				console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);
-			});
-
 			const stream = await ytdl(song.url, {
 				filter: 'audioonly',
-				quality: 'highestaudio',
 			});
-
 			const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
 			const player = createAudioPlayer();
-			player.on('stateChange', (oldState, newState) => {
-				console.log(`Audio player transitioned from ${oldState.status} to ${newState.status}`);
-			});
 			player.play(resource);
 			connection.subscribe(player);
 
