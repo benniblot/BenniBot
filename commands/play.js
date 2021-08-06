@@ -86,7 +86,7 @@ module.exports = {
 						inline: false,
 					})
 					.setThumbnail(song.thumbnail);
-				message.channel.send(playing);
+				message.channel.send({ embeds: [playing] });
 			});
 
 			stream.on('finish', () => {
@@ -101,7 +101,7 @@ module.exports = {
 						value: 'Stopped playing Music and left the Voice Channel',
 						inline: true,
 					});
-				message.channel.send(stopped);
+				message.channel.send({ embeds: [stopped] });
 				connection.disconnect();
 			});
 		} else {

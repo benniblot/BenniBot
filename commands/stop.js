@@ -18,7 +18,7 @@ module.exports = {
 					value: 'stopped playing music and left the Voice Channel',
 					inline: true,
 				});
-			message.channel.send(stopped);
+			message.channel.send({ embeds: [stopped] });
 			connection.disconnect();
 		} else {
 			message.reply('You need to join a Voice Channel first!');

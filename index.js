@@ -50,7 +50,7 @@ client.on('messageCreate', message => {
 				inline: true,
 			})
 			.setTimestamp();
-		return message.channel.send(argerror);
+		return message.channel.send({ embeds: [argerror] });
 	}
 
 	try {
