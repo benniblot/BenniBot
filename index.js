@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const { Client, Intents } = require('discord.js');
 // Intents: https://discord.com/developers/docs/topics/gateway#gateway-intents
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_PRESENCES] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
 client.commands = new Discord.Collection();
 
@@ -58,6 +58,6 @@ client.on('messageCreate', message => {
 		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
-		message.reply('There was an issue executing that command!');
+		message.reply({ content: 'There was an issue executing that command!', allowedMentions: { repliedUser: true } });
 	}
 });

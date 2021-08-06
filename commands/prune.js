@@ -8,7 +8,7 @@ module.exports = {
 		const amount = parseInt(args[0]) + 1;
 
 		if (amount <= 1 || amount > 100) {
-			return message.reply('You need to input a number between 1 and 99.');
+			return message.reply({ content: 'You need to input a number between 1 and 99.', allowedMentions: { repliedUser: true } });
 		}
 
 		message.channel.bulkDelete(amount, true).catch(err => {

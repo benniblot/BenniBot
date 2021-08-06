@@ -26,7 +26,7 @@ module.exports = {
 	aliases: ['p'],
 	async execute(message, args) {
 
-		if (message.member.VoiceChannel) {
+		if (message.member.voice.channel) {
 			const targetsong = args.join(' ');
 			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
 			const YoutubeCheck = YoutubeCheckPattern.test(args[0]);
@@ -105,7 +105,7 @@ module.exports = {
 				connection.disconnect();
 			});
 		} else {
-			message.reply('You need to join a Voice Channel first!');
+			message.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
 		}
 	},
 };

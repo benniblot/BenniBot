@@ -17,7 +17,7 @@ module.exports = {
 				});
 			});
 		} else {
-			message.reply('You need to join a voice channel first!');
+			message.reply({ content: 'You need to join a voice channel first!', allowedMentions: { repliedUser: true } });
 		}
 	},
 };

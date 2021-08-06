@@ -4,6 +4,7 @@ module.exports = {
 	name: 'alone',
 	description: 'Use this command when you are alone',
 	args: false,
+	aliases: ['ineedhelp'],
 	async execute(message) {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
@@ -15,12 +16,12 @@ module.exports = {
 			});
 
 			dispatcher.on('finish', () => {
-				message.reply('Ok');
+				message.reply({ content: 'Ok', allowedMentions: { repliedUser: false } });
 				console.log('BenniBot stopped');
 				connection.disconnect();
 			});
 		} else {
-			message.reply('You need to join a voice channel first, so I can hear your beautiful voice :)');
+			message.reply({ content: 'You need to join a voice channel first, so I can hear your beautiful voice :)', allowedMentions: { repliedUser: true } });
 		}
 	},
 };
