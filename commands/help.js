@@ -21,7 +21,7 @@ module.exports = {
 				split: true,
 			})
 				.then(() => {
-					if (message.channel.type === 'dm') return;
+					if (message.channel.type === 'DM') return;
 					message.reply({ content: 'I\'ve sent you a DM with all my commands!', allowedMentions: { repliedUser: false } });
 				})
 				.catch(error => {

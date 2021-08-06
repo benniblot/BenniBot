@@ -6,7 +6,13 @@ const {
 } = require('../config.json');
 const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
-const DiscordVoice = require('@discordjs/voice');
+const {
+	AudioPlayerStatus,
+	StreamType,
+	createAudioPlayer,
+	createAudioResource,
+	joinVoiceChannel,
+} = require('@discordjs/voice');
 const YoutubeAPI = require('simple-youtube-api');
 const youtube = new YoutubeAPI(process.env.api_key);
 const day = new Date();
@@ -16,7 +22,6 @@ const s = String(day.getSeconds()).padStart(2, '0');
 const d = String(day.getDate()).padStart(2, '0');
 const mo = String(day.getMonth() + 1).padStart(2, '0');
 const y = String(day.getFullYear()).padStart(2, '0');
-
 
 module.exports = {
 	name: 'play',
@@ -63,13 +68,31 @@ module.exports = {
 
 			const minutes = Math.floor(song.duration / 60);
 			const seconds = song.duration - minutes * 60;
-			const connection = await message.member.voiceChannel.join().catch();
-			const stream = connection.play(await ytdl(song.url), {
+
+			const connection = joinVoiceChannel({
+				channelId: message.member.voice.channel.id,
+				guildId: message.member.guild.id,
+				adapterCreator: message.member.voice.channel.guild.voiceAdapterCreator,
+			});
+
+			connection.on('stateChange', (oldState, newState) => {
+				console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);
+			});
+
+			const stream = await ytdl(song.url, {
 				filter: 'audioonly',
-				type: 'opus',
 				quality: 'highestaudio',
 			});
-			stream.on('start', () => {
+
+			const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
+			const player = createAudioPlayer();
+			player.on('stateChange', (oldState, newState) => {
+				console.log(`Audio player transitioned from ${oldState.status} to ${newState.status}`);
+			});
+			player.play(resource);
+			connection.subscribe(player);
+
+			player.on(AudioPlayerStatus.Playing, () => {
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + message.guild.name + ': playing - ' + song.title);
 				const playing = new Discord.MessageEmbed()
 					.setColor(color)
@@ -89,7 +112,7 @@ module.exports = {
 				message.channel.send({ embeds: [playing] });
 			});
 
-			stream.on('finish', () => {
+			player.on(AudioPlayerStatus.Idle, () => {
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + message.guild.name + ': Stopped playing Music and left the Voice Channel');
 				const stopped = new Discord.MessageEmbed()
 					.setColor(color)
@@ -102,7 +125,7 @@ module.exports = {
 						inline: true,
 					});
 				message.channel.send({ embeds: [stopped] });
-				connection.disconnect();
+				connection.destroy();
 			});
 		} else {
 			message.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });

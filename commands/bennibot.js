@@ -1,5 +1,11 @@
 const ytdl = require('ytdl-core-discord');
-const DiscordVoice = require('@discordjs/voice');
+const {
+	AudioPlayerStatus,
+	StreamType,
+	createAudioPlayer,
+	createAudioResource,
+	joinVoiceChannel,
+} = require('@discordjs/voice');
 
 module.exports = {
 	name: 'bennibot',
