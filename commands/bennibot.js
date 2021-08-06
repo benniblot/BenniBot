@@ -1,12 +1,19 @@
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
+const {
+	AudioPlayerStatus,
+	StreamType,
+	createAudioPlayer,
+	createAudioResource,
+	joinVoiceChannel,
+} = require('@discordjs/voice');
 
 module.exports = {
 	name: 'bennibot',
 	description: 'Benni Bots Secret',
 	args: false,
 	async execute(message) {
-		if (message.member.voice.channel) {
-			const connection = await message.member.voice.channel.join();
+		if (message.member.voice) {
+			const connection = DiscordVoice.joinVoiceChannel();
 			console.log('BenniBot EarRaped');
 			const dispatcher = connection.play(ytdl('https://youtu.be/-HZE1XBqC6M', {
 				filter: 'audioonly',
@@ -15,7 +22,7 @@ module.exports = {
 				connection.disconnect();
 			});
 		} else {
-			message.reply('You need to join a voice channel first!');
+			message.reply({ content: 'You need to join a voice channel first!', allowedMentions: { repliedUser: true } });
 		}
 	},
 };
