@@ -5,7 +5,6 @@ const {
 	color,
 } = require('../config.json');
 const ytdl = require('ytdl-core');
-// const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const {
 	AudioPlayerStatus,
@@ -47,10 +46,12 @@ module.exports = {
 						duration: songData.videoDetails.lengthSeconds,
 						thumbnail: songData.videoDetails.thumbnails[3].url,
 					};
-				} catch (error) {
+				}
+				catch (error) {
 					console.error(Error);
 				}
-			} else {
+			}
+			else {
 
 				try {
 					const result = await youtube.searchVideos(targetsong, 1);
@@ -62,7 +63,8 @@ module.exports = {
 						duration: songData.videoDetails.lengthSeconds,
 						thumbnail: songData.videoDetails.thumbnails[3].url,
 					};
-				} catch (error) {
+				}
+				catch (error) {
 					console.log(error);
 				}
 			}
@@ -80,6 +82,13 @@ module.exports = {
 			});
 			const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
 			const player = createAudioPlayer();
+			connection.on('stateChange', (oldState, newState) => {
+				console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);
+			});
+
+			player.on('stateChange', (oldState, newState) => {
+				console.log(`Audio player transitioned from ${oldState.status} to ${newState.status}`);
+			});
 			player.play(resource);
 			connection.subscribe(player);
 
@@ -90,7 +99,8 @@ module.exports = {
 					.setTitle('BenniBot');
 				if (minutes === 0 && seconds === 0) {
 					playing.setFooter('Live');
-				} else {
+				}
+				else {
 					playing.setFooter(minutes + 'm:' + seconds + 's');
 				}
 				playing.setTimestamp()
@@ -118,7 +128,8 @@ module.exports = {
 				message.channel.send({ embeds: [stopped] });
 				connection.destroy();
 			});
-		} else {
+		}
+		else {
 			message.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
 		}
 	},

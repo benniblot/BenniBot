@@ -17,7 +17,7 @@ const {
 	bot_info,
 } = require('./config.json');
 
-client.login(process.env.token);
+client.login(process.env.tokenb);
 
 client.once('ready', () => {
 	client.user.setActivity('WARTUNG: ' + bot_info.version, {
@@ -56,7 +56,8 @@ client.on('messageCreate', message => {
 
 	try {
 		command.execute(message, args, client);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		message.reply({ content: 'There was an issue executing that command!', allowedMentions: { repliedUser: true } });
 	}
