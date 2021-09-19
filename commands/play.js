@@ -5,7 +5,7 @@ require('dotenv').config({
 const {
 	color,
 } = require('../config.json');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 const Discord = require('discord.js');
 const {
 	AudioPlayerStatus,
@@ -16,7 +16,7 @@ const {
 } = require('@discordjs/voice');
 const YoutubeAPI = require('simple-youtube-api');
 const youtube = new YoutubeAPI(process.env.api_key);
-const time = require('../time.js');
+const time = require('../handler/time.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,9 +24,10 @@ module.exports = {
 		.setDescription('Joins your current Voice Channel and starts playing your selected music')
 		.addStringOption(option =>
 			option.setName('url')
-				.setDescription('YouTube URL')
+				.setDescription('YouTube URL or Name of the Song')
 				.setRequired(true)),
 	async execute(interaction) {
+		interaction.deferReply();
 		if (interaction.member.voice.channel) {
 			const targetsong = interaction.options.getString('url');
 			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
@@ -74,11 +75,15 @@ module.exports = {
 				guildId: interaction.member.guild.id,
 				adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
 			});
-			const stream = await ytdl(song.url, {
+			var stream = await ytdl(song.url, {
+				highWaterMark: 1 << 25,
 				filter: 'audioonly',
 			});
-			const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
 			const player = createAudioPlayer();
+			const resource = createAudioResource(stream, { inputType: StreamType.Opus });
+			connection.subscribe(player);
+			player.play(resource);
+
 			connection.on('stateChange', (oldState, newState) => {
 				console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);
 			});
@@ -86,8 +91,6 @@ module.exports = {
 			player.on('stateChange', (oldState, newState) => {
 				console.log(`Audio player transitioned from ${oldState.status} to ${newState.status}`);
 			});
-			player.play(resource);
-			connection.subscribe(player);
 
 			var [h,mi,s,d,mo,y] = time.execute();
 			console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
@@ -108,7 +111,7 @@ module.exports = {
 					inline: false,
 				})
 				.setThumbnail(song.thumbnail);
-				interaction.reply({ embeds: [playing] });
+				interaction.editReply({ embeds: [playing] });
 			//End of Reply
 
 			player.on(AudioPlayerStatus.Idle, () => {
@@ -129,7 +132,7 @@ module.exports = {
 			});
 		}
 		else {
-			interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
+			interaction.editReply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
 		}
 	},
 };

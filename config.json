@@ -2,11 +2,12 @@
     "prefix": ".",
     "bot_info": {
         "name": "BenniBot",
-        "version": "4.0.0.0"
+        "version": "4.1.0.0"
     },
     "inviteURL": "https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot",
     "color": "BLUE",
     "owner_id": "497740534828498950",
 	"clientId": "692296016182902814",
-	"guildId": "758984940213501972"
+    "guildId": "709856854804791507"
+
 }
