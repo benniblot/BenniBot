@@ -2,11 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 require('dotenv').config({
 	path: '.env',
 });
-const {
-	color,
-} = require('../config.json');
 const ytdl = require('ytdl-core-discord');
-const Discord = require('discord.js');
 const {
 	AudioPlayerStatus,
 	StreamType,
@@ -17,6 +13,7 @@ const {
 const YoutubeAPI = require('simple-youtube-api');
 const youtube = new YoutubeAPI(process.env.api_key);
 const time = require('../handler/time.js');
+const embeds = require('../handler/embeds.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -67,9 +64,6 @@ module.exports = {
 				}
 			}
 
-			const minutes = Math.floor(song.duration / 60);
-			const seconds = song.duration - minutes * 60;
-
 			const connection = joinVoiceChannel({
 				channelId: interaction.member.voice.channel.id,
 				guildId: interaction.member.guild.id,
@@ -94,40 +88,14 @@ module.exports = {
 
 			var [h,mi,s,d,mo,y] = time.execute();
 			console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
-
-			//Reply when Playing
-			const playing = new Discord.MessageEmbed()
-				.setColor(color)
-				.setTitle('BenniBot');
-			if (minutes === 0 && seconds === 0) {
-				playing.setFooter('Live');
-			}
-			else {
-				playing.setFooter(minutes + 'm ' + seconds + 's');
-			}
-			playing.addFields({
-					name: 'Now playing: ',
-					value: song.title + "\n" + song.url,
-					inline: false,
-				})
-				.setThumbnail(song.thumbnail);
-				interaction.editReply({ embeds: [playing] });
-			//End of Reply
+			const playing = embeds.playing(song);
+			interaction.editReply({ embeds: [playing] });
 
 			player.on(AudioPlayerStatus.Idle, () => {
 				var [h,mi,s,d,mo,y] = time.execute();
-				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': Stopped playing Music and left the Voice Channel');
-				const stopped = new Discord.MessageEmbed()
-					.setColor(color)
-					.setTitle('BenniBot')
-					.setFooter(song.url)
-					.setTimestamp()
-					.addFields({
-						name: 'BenniBot: ',
-						value: 'Stopped playing Music and left the Voice Channel',
-						inline: true,
-					});
-					interaction.followUp({ embeds: [stopped] });
+				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': Stopped playing and left');
+				const stopped = embeds.stopped(song);
+				interaction.followUp({ embeds: [stopped] });
 				connection.destroy();
 			});
 		}
