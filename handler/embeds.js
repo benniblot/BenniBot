@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const {
-	color,
+    color,
 } = require('../config.json');
 
 module.exports = {
@@ -14,6 +14,10 @@ module.exports = {
             .setTitle('BenniBot');
         if (minutes === 0 && seconds === 0) {
             playing.setFooter('Live');
+        } else if (minutes === 0 && seconds > 0) {
+            playing.setFooter(seconds + 's');
+        } else if (minutes > 0 && seconds === 0) {
+            playing.setFooter(minutes + 'm');
         } else {
             playing.setFooter(minutes + 'm ' + seconds + 's');
         }
@@ -27,15 +31,15 @@ module.exports = {
     },
     stopped(song) {
         const stopped = new Discord.MessageEmbed()
-        .setColor(color)
-        .setTitle('BenniBot')
-        .setFooter(song.url)
-        .setTimestamp()
-        .addFields({
-            name: 'Stopped playing ' + song.title,
-            value:  'Left the Voice Channel',
-            inline: true,
-        });
+            .setColor(color)
+            .setTitle('BenniBot')
+            .setFooter(song.url)
+            .setTimestamp()
+            .addFields({
+                name: 'Stopped playing ' + song.title,
+                value: 'Left the Voice Channel',
+                inline: true,
+            });
         return stopped;
     }
 };
