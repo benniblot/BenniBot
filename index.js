@@ -1,30 +1,53 @@
-const fs = require('fs');
-const { Client, Intents, Collection } = require('discord.js');
-const { } = require('./config.json');
-require('dotenv').config({
-    path: '.env',
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var discord_js_1 = require("discord.js");
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+var fs_1 = __importDefault(require("fs"));
+var client = new discord_js_1.Client({
+    intents: [
+        discord_js_1.Intents.FLAGS.GUILDS,
+        discord_js_1.Intents.FLAGS.GUILD_MESSAGES,
+        discord_js_1.Intents.FLAGS.DIRECT_MESSAGES,
+        discord_js_1.Intents.FLAGS.GUILD_VOICE_STATES
+    ]
 });
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
-
-client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	// Set a new item in the Collection
-	// With the key as the command name and the value as the exported module
-	client.commands.set(command.data.name, command);
+client.commands = new discord_js_1.Collection();
+var commandFiles = fs_1.default.readdirSync('./commands').filter(function (file) { return file.endsWith('.js'); });
+for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
+    var file = commandFiles_1[_i];
+    var command = require("./commands/" + file);
+    // Set a new item in the Collection
+    // With the key as the command name and the value as the exported module
+    client.commands.set(command.data.name, command);
 }
-
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
-
-for (const file of eventFiles) {
-	const event = require(`./events/${file}`);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	} else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
+var eventFiles = fs_1.default.readdirSync('./events').filter(function (file) { return file.endsWith('.js'); });
+var _loop_1 = function (file) {
+    var event_1 = require("./events/" + file);
+    if (event_1.once) {
+        client.once(event_1.name, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return event_1.execute.apply(event_1, args);
+        });
+    }
+    else {
+        client.on(event_1.name, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return event_1.execute.apply(event_1, args);
+        });
+    }
+};
+for (var _a = 0, eventFiles_1 = eventFiles; _a < eventFiles_1.length; _a++) {
+    var file = eventFiles_1[_a];
+    _loop_1(file);
 }
-
 client.login(process.env.token);

@@ -20,8 +20,8 @@ const rest = new REST({ version: '9' }).setToken(process.env.token);
 	try {
 		await rest.put(
 			// Global Commands
-			Routes.applicationCommands(clientId),
-			// Routes.applicationGuildCommands(clientId, guildId),
+			// Routes.applicationCommands(clientId),
+			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
 		);
 

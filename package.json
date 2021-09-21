@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -w --skipLibCheck"
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,8 @@
     "simple-youtube-api": "^5.2.1",
     "ytdl-core": "^4.9.1",
     "ytdl-core-discord": "^1.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
   }
 }
