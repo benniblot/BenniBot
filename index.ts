@@ -2,7 +2,6 @@ import DiscordJS, { Client, Intents, Collection } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config()
 import fs from 'fs'
-import config from "./config.json"
 
 const client = new Client({ 
     intents: [

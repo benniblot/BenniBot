@@ -35,41 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var discord_js_1 = __importDefault(require("discord.js"));
-var voice_1 = require("@discordjs/voice");
 var builders_1 = require("@discordjs/builders");
 module.exports = {
     data: new builders_1.SlashCommandBuilder()
-        .setName('stop')
-        .setDescription('Stops the current playing music and leaves the Voice Channel'),
+        .setName('prune')
+        .setDescription('Delete up to 99 messages.')
+        .addIntegerOption(function (option) {
+        return option.setName('number')
+            .setDescription('Number of Messages')
+            .setRequired(true);
+    }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, stopped;
+            var amount;
             return __generator(this, function (_a) {
-                if (interaction.member.voice.channel) {
-                    connection = (0, voice_1.getVoiceConnection)(interaction.member.voice.channel.guild.id);
-                    console.log(interaction.guild.name + ': Stopped playing Music and left the Voice Channel');
-                    stopped = new discord_js_1.default.MessageEmbed()
-                        .setColor('#0000ff')
-                        .setTitle('BenniBot')
-                        .setTimestamp()
-                        .addFields({
-                        name: 'Stopped playing:',
-                        value: 'Leaving the Voice Channel',
-                        inline: true,
-                    });
-                    interaction.reply({ embeds: [stopped] });
-                    if (connection) {
-                        connection.destroy();
-                    }
+                ;
+                amount = parseInt(interaction.options.getInteger('number'));
+                if (amount < 1 || amount > 99) {
+                    interaction.reply({ content: 'You need to input a number between 1 and 99.', allowedMentions: { repliedUser: true } });
                 }
-                else {
-                    interaction.reply({ content: 'You need to join the Voice Channel first!', allowedMentions: { repliedUser: true } });
-                }
+                console.log(amount);
+                interaction.channel.bulkDelete(amount, true).catch(function (err) {
+                    console.error(err);
+                    interaction.reply({ content: 'There was an error trying to prune messages in this channel!', allowedMentions: { repliedUser: true } });
+                });
+                interaction.reply({ content: amount + ' Messages got deleted', allowedMentions: { repliedUser: true } });
                 return [2 /*return*/];
             });
         });
