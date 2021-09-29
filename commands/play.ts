@@ -10,6 +10,7 @@ import {
 	joinVoiceChannel,
 } from '@discordjs/voice'
 import YoutubeAPI from 'simple-youtube-api'
+import ytsr from 'ytsr'
 const youtube = new YoutubeAPI(process.env.api_key)
 const time = require('../handler/time.js')
 const embeds = require('../handler/embeds.js') 
@@ -47,9 +48,11 @@ module.exports = {
 			else {
 
 				try {
-					const result = await youtube.searchVideos(targetsong, 1);
-					songData = await ytdl.getInfo(result[0].url);
 
+					const result = await ytsr('lofi hip hop', { limit : 1 })
+					console.log(result.items[0].type)
+					// const result = await youtube.searchVideos(targetsong, 1);
+					songData = await ytdl.getInfo('asdf');
 					song = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,

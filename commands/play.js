@@ -45,6 +45,7 @@ dotenv_1.default.config();
 var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var voice_1 = require("@discordjs/voice");
 var simple_youtube_api_1 = __importDefault(require("simple-youtube-api"));
+var ytsr_1 = __importDefault(require("ytsr"));
 var youtube = new simple_youtube_api_1.default(process.env.api_key);
 var time = require('../handler/time.js');
 var embeds = require('../handler/embeds.js');
@@ -91,11 +92,13 @@ module.exports = {
                     case 4: return [3 /*break*/, 9];
                     case 5:
                         _b.trys.push([5, 8, , 9]);
-                        return [4 /*yield*/, youtube.searchVideos(targetsong, 1)];
+                        return [4 /*yield*/, (0, ytsr_1.default)('lofi hip hop', { limit: 1 })];
                     case 6:
                         result = _b.sent();
-                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(result[0].url)];
+                        console.log(result.items[0].type);
+                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo('asdf')];
                     case 7:
+                        // const result = await youtube.searchVideos(targetsong, 1);
                         songData = _b.sent();
                         song_1 = {
                             title: songData.videoDetails.title,
