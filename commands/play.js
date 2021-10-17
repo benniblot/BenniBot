@@ -45,7 +45,6 @@ dotenv_1.default.config();
 var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var voice_1 = require("@discordjs/voice");
 var simple_youtube_api_1 = __importDefault(require("simple-youtube-api"));
-var ytsr_1 = __importDefault(require("ytsr"));
 var youtube = new simple_youtube_api_1.default(process.env.api_key);
 var time = require('../handler/time.js');
 var embeds = require('../handler/embeds.js');
@@ -60,12 +59,12 @@ module.exports = {
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, player, resource, _a, h, mi, s, d, mo, y, playing;
+            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, connection_1, stream, player, resource, _a, h, mi, s, d, mo, y, playing;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         interaction.deferReply();
-                        if (!interaction.member.voice.channel) return [3 /*break*/, 11];
+                        if (!interaction.member.voice.channel) return [3 /*break*/, 8];
                         targetsong = interaction.options.getString('url');
                         YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
                         YoutubeCheck = YoutubeCheckPattern.test(interaction.options.getString('url'));
@@ -89,29 +88,27 @@ module.exports = {
                         error_1 = _b.sent();
                         console.error(Error);
                         return [3 /*break*/, 4];
-                    case 4: return [3 /*break*/, 9];
+                    case 4: return [3 /*break*/, 6];
                     case 5:
-                        _b.trys.push([5, 8, , 9]);
-                        return [4 /*yield*/, (0, ytsr_1.default)('lofi hip hop', { limit: 1 })];
+                        try {
+                            // const result = await ytsr('lofi hip hop', { limit : 1 })
+                            // console.log(result.items[0].type)
+                            // const result = await youtube.searchVideos(targetsong, 1);
+                            // songData = await ytdl.getInfo('asdf');
+                            /* song = {
+                                title: songData.videoDetails.title,
+                                url: songData.videoDetails.video_url,
+                                duration: songData.videoDetails.lengthSeconds,
+                                thumbnail: songData.videoDetails.thumbnails[3].url,
+                            };*/
+                            interaction.deferReply();
+                            interaction.editReply({ content: 'Pong again!' });
+                        }
+                        catch (error) {
+                            console.log(error);
+                        }
+                        _b.label = 6;
                     case 6:
-                        result = _b.sent();
-                        console.log(result.items[0].type);
-                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo('asdf')];
-                    case 7:
-                        // const result = await youtube.searchVideos(targetsong, 1);
-                        songData = _b.sent();
-                        song_1 = {
-                            title: songData.videoDetails.title,
-                            url: songData.videoDetails.video_url,
-                            duration: songData.videoDetails.lengthSeconds,
-                            thumbnail: songData.videoDetails.thumbnails[3].url,
-                        };
-                        return [3 /*break*/, 9];
-                    case 8:
-                        error_2 = _b.sent();
-                        console.log(error_2);
-                        return [3 /*break*/, 9];
-                    case 9:
                         connection_1 = (0, voice_1.joinVoiceChannel)({
                             channelId: interaction.member.voice.channel.id,
                             guildId: interaction.member.guild.id,
@@ -121,7 +118,7 @@ module.exports = {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
                             })];
-                    case 10:
+                    case 7:
                         stream = _b.sent();
                         player = (0, voice_1.createAudioPlayer)();
                         resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus });
@@ -146,11 +143,11 @@ module.exports = {
                             interaction.followUp({ embeds: [stopped] });
                             connection_1.destroy();
                         });
-                        return [3 /*break*/, 12];
-                    case 11:
+                        return [3 /*break*/, 9];
+                    case 8:
                         interaction.editReply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
-                        _b.label = 12;
-                    case 12: return [2 /*return*/];
+                        _b.label = 9;
+                    case 9: return [2 /*return*/];
                 }
             });
         });

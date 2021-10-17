@@ -49,17 +49,18 @@ module.exports = {
 
 				try {
 
-					const result = await ytsr('lofi hip hop', { limit : 1 })
-					console.log(result.items[0].type)
+					// const result = await ytsr('lofi hip hop', { limit : 1 })
+					// console.log(result.items[0].type)
 					// const result = await youtube.searchVideos(targetsong, 1);
-					songData = await ytdl.getInfo('asdf');
-					song = {
+					// songData = await ytdl.getInfo('asdf');
+					/* song = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,
 						duration: songData.videoDetails.lengthSeconds,
 						thumbnail: songData.videoDetails.thumbnails[3].url,
-					};
-
+					};*/
+					interaction.deferReply()
+					interaction.editReply({ content: 'Pong again!' })
 				}
 				catch (error) {
 					console.log(error);
