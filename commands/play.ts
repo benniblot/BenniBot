@@ -10,7 +10,6 @@ import {
 	joinVoiceChannel,
 } from '@discordjs/voice'
 import YoutubeAPI from 'simple-youtube-api'
-import ytsr from 'ytsr'
 const youtube = new YoutubeAPI(process.env.api_key)
 const time = require('../handler/time.js')
 const embeds = require('../handler/embeds.js') 
@@ -23,8 +22,7 @@ module.exports = {
 			option.setName('url')
 				.setDescription('YouTube URL or Name of the Song')
 				.setRequired(true)),
-	async execute(interaction: { deferReply: () => void; member: { voice: { channel: { id: any; guild: { voiceAdapterCreator: any } } }; guild: { id: any } }; options: { getString: (arg0: string) => string }; guild: { name: string }; editReply: (arg0: { embeds?: any[]; content?: string; allowedMentions?: { repliedUser: boolean } }) => void; followUp: (arg0: { embeds: any[] }) => void }) {
-		interaction.deferReply();
+	async execute(interaction: { member: { voice: { channel: { id: any; guild: { voiceAdapterCreator: any } } }; guild: { id: any } }; options: { getString: (arg0: string) => string }; reply: (arg0: { content?: string; embeds?: any[]; allowedMentions?: { repliedUser: boolean } }) => void; guild: { name: string }; followUp: (arg0: { embeds: any[] }) => void }) {
 		if (interaction.member.voice.channel) {
 			const targetsong = interaction.options.getString('url');
 			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
@@ -48,19 +46,15 @@ module.exports = {
 			else {
 
 				try {
-
-					// const result = await ytsr('lofi hip hop', { limit : 1 })
-					// console.log(result.items[0].type)
-					// const result = await youtube.searchVideos(targetsong, 1);
-					// songData = await ytdl.getInfo('asdf');
-					/* song = {
+					 const result = youtube.searchVideos(targetsong, 1);
+					 console.log('\n\n\n ' + result[0] + '\n\n\n')
+					 songData = await ytdl.getInfo(result[0]);
+					 song = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,
 						duration: songData.videoDetails.lengthSeconds,
 						thumbnail: songData.videoDetails.thumbnails[3].url,
-					};*/
-					interaction.deferReply()
-					interaction.editReply({ content: 'Pong again!' })
+					};
 				}
 				catch (error) {
 					console.log(error);
@@ -95,7 +89,7 @@ module.exports = {
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
 			}
 			const playing = embeds.playing(song);
-			interaction.editReply({ embeds: [playing] });
+			interaction.reply({ embeds: [playing] });
 
 			player.on(AudioPlayerStatus.Idle, () => {
 				var [h,mi,s,d,mo,y] = time.execute();
@@ -106,7 +100,7 @@ module.exports = {
 			});
 		}
 		else {
-			interaction.editReply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
+			interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
 		}
 	},
 };

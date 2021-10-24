@@ -59,12 +59,11 @@ module.exports = {
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, connection_1, stream, player, resource, _a, h, mi, s, d, mo, y, playing;
+            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, player, resource, _a, h, mi, s, d, mo, y, playing;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        interaction.deferReply();
-                        if (!interaction.member.voice.channel) return [3 /*break*/, 8];
+                        if (!interaction.member.voice.channel) return [3 /*break*/, 10];
                         targetsong = interaction.options.getString('url');
                         YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
                         YoutubeCheck = YoutubeCheckPattern.test(interaction.options.getString('url'));
@@ -88,27 +87,26 @@ module.exports = {
                         error_1 = _b.sent();
                         console.error(Error);
                         return [3 /*break*/, 4];
-                    case 4: return [3 /*break*/, 6];
+                    case 4: return [3 /*break*/, 8];
                     case 5:
-                        try {
-                            // const result = await ytsr('lofi hip hop', { limit : 1 })
-                            // console.log(result.items[0].type)
-                            // const result = await youtube.searchVideos(targetsong, 1);
-                            // songData = await ytdl.getInfo('asdf');
-                            /* song = {
-                                title: songData.videoDetails.title,
-                                url: songData.videoDetails.video_url,
-                                duration: songData.videoDetails.lengthSeconds,
-                                thumbnail: songData.videoDetails.thumbnails[3].url,
-                            };*/
-                            interaction.deferReply();
-                            interaction.editReply({ content: 'Pong again!' });
-                        }
-                        catch (error) {
-                            console.log(error);
-                        }
-                        _b.label = 6;
+                        _b.trys.push([5, 7, , 8]);
+                        result = youtube.searchVideos(targetsong, 1);
+                        console.log('\n\n\n ' + result[0] + '\n\n\n');
+                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(result[0])];
                     case 6:
+                        songData = _b.sent();
+                        song_1 = {
+                            title: songData.videoDetails.title,
+                            url: songData.videoDetails.video_url,
+                            duration: songData.videoDetails.lengthSeconds,
+                            thumbnail: songData.videoDetails.thumbnails[3].url,
+                        };
+                        return [3 /*break*/, 8];
+                    case 7:
+                        error_2 = _b.sent();
+                        console.log(error_2);
+                        return [3 /*break*/, 8];
+                    case 8:
                         connection_1 = (0, voice_1.joinVoiceChannel)({
                             channelId: interaction.member.voice.channel.id,
                             guildId: interaction.member.guild.id,
@@ -118,7 +116,7 @@ module.exports = {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
                             })];
-                    case 7:
+                    case 9:
                         stream = _b.sent();
                         player = (0, voice_1.createAudioPlayer)();
                         resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus });
@@ -135,7 +133,7 @@ module.exports = {
                             console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song_1.title);
                         }
                         playing = embeds.playing(song_1);
-                        interaction.editReply({ embeds: [playing] });
+                        interaction.reply({ embeds: [playing] });
                         player.on(voice_1.AudioPlayerStatus.Idle, function () {
                             var _a = time.execute(), h = _a[0], mi = _a[1], s = _a[2], d = _a[3], mo = _a[4], y = _a[5];
                             console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': Stopped playing and left');
@@ -143,11 +141,11 @@ module.exports = {
                             interaction.followUp({ embeds: [stopped] });
                             connection_1.destroy();
                         });
-                        return [3 /*break*/, 9];
-                    case 8:
-                        interaction.editReply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
-                        _b.label = 9;
-                    case 9: return [2 /*return*/];
+                        return [3 /*break*/, 11];
+                    case 10:
+                        interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
+                        _b.label = 11;
+                    case 11: return [2 /*return*/];
                 }
             });
         });
