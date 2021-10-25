@@ -1,4 +1,5 @@
 import { bot_info } from '../config.json'
+const ytsearch = require('../handler/ytsearch.js')
 
 module.exports = {
 	name: 'ready',
