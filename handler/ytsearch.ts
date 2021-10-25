@@ -5,8 +5,7 @@ module.exports = {
     async execute (targetsong: string) {
         // getting HTML Code from Website
         const browser = await puppeteer.launch({
-            headless: true,
-            args: ['--no-sandbox']
+            args: ['--no-sandbox'],
           })
 
         const page = await browser.newPage()
