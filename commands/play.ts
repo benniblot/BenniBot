@@ -21,7 +21,7 @@ module.exports = {
 			option.setName('url')
 				.setDescription('YouTube URL or Name of the Song')
 				.setRequired(true)),
-	async execute(interaction: { deferReply: () => void; member: { voice: { channel: { id: any; guild: { voiceAdapterCreator: any } } }; guild: { id: any } }; options: { getString: (arg0: string) => string }; guild: { name: string }; editReply: (arg0: { embeds: any[] }) => void; followUp: (arg0: { embeds: any[] }) => void; reply: (arg0: { content: string; allowedMentions: { repliedUser: boolean } }) => void }) {
+	async execute(interaction: { deferReply: () => void; member: { voice: { channel: { id: any; guild: { voiceAdapterCreator: any } } }; guild: { id: any } }; options: { getString: (arg0: string) => string }; guild: { name: string }; reply: (arg0: { embeds?: any[]; content?: string; allowedMentions?: { repliedUser: boolean } }) => void; followUp: (arg0: { embeds: any[] }) => void }) {
 		interaction.deferReply();
 		if (interaction.member.voice.channel) {
 			const targetsong = interaction.options.getString('url');
@@ -88,7 +88,7 @@ module.exports = {
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
 			}
 			const playing = embeds.playing(song);
-			interaction.editReply({ embeds: [playing] });
+			interaction.reply({ embeds: [playing] });
 
 			player.on(AudioPlayerStatus.Idle, () => {
 				var [h,mi,s,d,mo,y] = time.execute();
