@@ -40,13 +40,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var builders_1 = require("@discordjs/builders");
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var voice_1 = require("@discordjs/voice");
-var ytsearch = require('../handler/ytsearch.js');
-var time = require('../handler/time.js');
-var embeds = require('../handler/embeds.js');
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+var ytsearch = require('../handler/ytsearch');
+var time = require('../handler/time');
+var embeds = require('../handler/embeds');
+var logger = require('../handler/VoiceStateLogger');
 module.exports = {
     data: new builders_1.SlashCommandBuilder()
         .setName('play')
@@ -123,12 +124,10 @@ module.exports = {
                         resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus });
                         connection_1.subscribe(player);
                         player.play(resource);
-                        connection_1.on('stateChange', function (oldState, newState) {
-                            console.log("Connection transitioned from " + oldState.status + " to " + newState.status);
-                        });
-                        player.on('stateChange', function (oldState, newState) {
-                            console.log("Audio player transitioned from " + oldState.status + " to " + newState.status);
-                        });
+                        // Execute the VoiceStateLogger to log the current state of the player when DevMode is true
+                        if (process.env.DEV_MODE === "true") {
+                            logger.execute(connection_1, player);
+                        }
                         _a = time.execute(), h = _a[0], mi = _a[1], s = _a[2], d = _a[3], mo = _a[4], y = _a[5];
                         if (song_1) {
                             console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song_1.title);

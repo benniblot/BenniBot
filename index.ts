@@ -1,4 +1,4 @@
-import DiscordJS, { Client, Intents, Collection } from 'discord.js'
+import { Client, Intents, Collection } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config()
 import fs from 'fs'

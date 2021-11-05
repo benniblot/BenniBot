@@ -45,10 +45,12 @@ module.exports = {
     name: 'ytsearch',
     execute: function (targetsong) {
         return __awaiter(this, void 0, void 0, function () {
-            var browser, page, pageData, $, element, link, id;
+            var browser, page, pageData, $, element, link, id, song;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, puppeteer_1.default.launch()];
+                    case 0: return [4 /*yield*/, puppeteer_1.default.launch({
+                            args: ['--no-sandbox'],
+                        })];
                     case 1:
                         browser = _a.sent();
                         return [4 /*yield*/, browser.newPage()];
@@ -65,7 +67,7 @@ module.exports = {
                     case 4:
                         pageData = _a.sent();
                         return [4 /*yield*/, browser.close()
-                            //Searching the resulting HTML Code for Information
+                            // Searching the resulting HTML Code for Information
                         ];
                     case 5:
                         _a.sent();
@@ -73,7 +75,9 @@ module.exports = {
                         element = $("div[id=dismissible] ytd-thumbnail a[class='yt-simple-endpoint inline-block style-scope ytd-thumbnail']");
                         link = element.attr("href");
                         id = link.split("=");
-                        return [2 /*return*/, id[1]];
+                        song = id[1];
+                        // Returning the Link to the Song
+                        return [2 /*return*/, song];
                 }
             });
         });
