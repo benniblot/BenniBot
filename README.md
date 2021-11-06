@@ -22,7 +22,6 @@ If you have any question feels free to contact me ^^
 ## Features
 
 - play Songs (YouTube Links, Search Phrases)
-- 
 
 ## Member List
 
@@ -34,5 +33,5 @@ If you want to test BenniBot or just use it you can invite him <a href="https://
 
 ## Contact
 
-Discord: Benni0109#7626
+Discord: Benni0109#7626 <br>
 Twitter: BeniBlot
