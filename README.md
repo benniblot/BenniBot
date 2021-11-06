@@ -19,10 +19,20 @@ Hi, my name is Benjamin and I'm currently working alone on this little Discord M
 You are free to use this code for your own purpose but please reference me clearly somewhere.
 If you have any question feels free to contact me ^^
 
-## Invite BenniBot to your Server
+## Features
 
-If you want to test BenniBot or just use it you can invite him <a href="https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot%20applications.commands">here</a>
+- play Songs (YouTube Links, Search Phrases)
+- 
 
 ## Member List
 
 - Owner/Developer: <a href="https://github.com/Benni0109/">@Benni0109</a>
+
+## Invite BenniBot to your Server
+
+If you want to test BenniBot or just use it you can invite him <a href="https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot%20applications.commands">here</a>
+
+## Contact
+
+Discord: Benni0109#7626
+Twitter: BeniBlot
