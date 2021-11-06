@@ -6,8 +6,8 @@
   <br />
   <p>
     <a href="https://discord.gg/bFbBJYdeBf"><img src="https://img.shields.io/discord/866270060477153291?color=white&label=Discord&logo=Discord&logoColor=white&style=plastic" alt="Discord server" /></a>
-    <a href=""><img src="https://img.shields.io/github/package-json/version/Benni0109/BenniBot?color=white&label=Version&style=plastic" alt="npm version" /></a>
-    <a href=""><img src="https://img.shields.io/tokei/lines/github/Benni0109/BenniBot?color=white&label=Lines&style=plastic" alt="Lines of Code" /></a>
+    <a href="https://github.com/Benni0109/BenniBot/"><img src="https://img.shields.io/github/package-json/version/Benni0109/BenniBot?color=white&label=Version&style=plastic" alt="npm version" /></a>
+    <a href="https://github.com/Benni0109/BenniBot/"><img src="https://img.shields.io/tokei/lines/github/Benni0109/BenniBot?color=white&label=Lines&style=plastic" alt="Lines of Code" /></a>
   </p>
 </div>
 
