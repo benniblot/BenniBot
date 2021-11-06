@@ -80,7 +80,7 @@ module.exports = {
 			if(process.env.DEV_MODE === "true"){
 				logger.execute(connection,player)
 			}
-
+			
 			var [h,mi,s,d,mo,y] = time.execute();
 			if(song){
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
