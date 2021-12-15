@@ -7,9 +7,8 @@ import {
 	createAudioResource,
 	joinVoiceChannel,
 } from '@discordjs/voice'
-import dotenv from 'dotenv'
-dotenv.config()
-const ytsearch = require('../handler/ytsearch')
+
+import ytsearch from '../handler/ytsearch' 
 const time = require('../handler/time')
 const embeds = require('../handler/embeds') 
 const logger = require('../handler/VoiceStateLogger')
@@ -21,15 +20,21 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('url')
 				.setDescription('YouTube URL or Name of the Song')
-				.setRequired(true)),
-	async execute(interaction: { deferReply: () => void; member: { voice: { channel: { id: any; guild: { voiceAdapterCreator: any } } }; guild: { id: any } }; options: { getString: (arg0: string) => string }; guild: { name: string }; editReply: (arg0: { embeds: any[] }) => void; followUp: (arg0: { embeds: any[] }) => void; reply: (arg0: { content: string; allowedMentions: { repliedUser: boolean } }) => void }) {
+				.setRequired(true))
+		.addStringOption(option => 
+			option.setName('volume')
+				.setDescription('Volume of the Song'))
+		.addStringOption(option =>
+			option.setName('loop')
+				.setDescription('Loop the Song')),	
+	async execute(interaction) {
 		interaction.deferReply();
 		if (interaction.member.voice.channel) {
-			const targetsong = interaction.options.getString('url');
+			const targetsong:string = interaction.options.getString('url');
 			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
 			const YoutubeCheck = YoutubeCheckPattern.test(interaction.options.getString('url'));
 			let songData = null;
-			let song: { url: any; title: any; duration?: string; thumbnail?: string } | null = null;
+			let song: { url: any; title: any; duration: string; thumbnail: string } | null = null;
 			if (YoutubeCheck) {
 				try {
 					songData = await ytdl.getInfo(interaction.options.getString('url'));
@@ -47,7 +52,7 @@ module.exports = {
 			else {
 
 				try {
-					 const result:string = await ytsearch.execute(targetsong)
+					 const result:string = await ytsearch.execute(targetsong);
 					 songData = await ytdl.getInfo(result);
 					 song = {
 						title: songData.videoDetails.title,
@@ -61,12 +66,57 @@ module.exports = {
 				}
 			}
 
+			/*// save the songs in a queue to play later
+			const queue = interaction.guild.voice.queue;
+			if (song) {
+				queue.push(song);
+			}
+			if (queue.length === 1) {
+				const voiceAdapter = interaction.guild.voice.voiceAdapterCreator.createVoiceAdapter(interaction.guild.id);
+				const voiceConnection = await joinVoiceChannel({
+					guildId: interaction.guild.id, 
+					channelId: interaction.member.voice.channel.id, 
+					adapterCreator: voiceAdapter
+				});
+				const audioPlayer = createAudioPlayer();
+				try{
+					var stream = await ytdl(song.url, {
+					filter: 'audioonly',
+					quality: 'highestaudio',
+					highWaterMark: 1 << 25
+					});
+				} catch (error) {
+					console.log(error);
+				}
+				const audioResource = createAudioResource(stream, { inputType: StreamType.Opus });
+				voiceConnection.subscribe(audioPlayer);
+				audioPlayer.play(audioResource);
+				if (AudioPlayerStatus.Playing) {
+					const embed = embeds.createEmbed(song.title, song.thumbnail, song.duration);
+					interaction.editReply({ embeds: [embed] });
+					interaction.followUp({ embeds: [embed] });
+					logger.log(interaction.guild.id, interaction.member.id, song.title, song.url, song.duration, song.thumbnail, 'play')
+				}
+				else {
+					interaction.reply({ content: 'Something went wrong while playing the song', allowedMentions: { repliedUser: true } });
+				}
+			}
+			else {
+				const embed = embeds.createEmbed(song.title, song.thumbnail, song.duration);
+				interaction.editReply({ embeds: [embed] });
+				interaction.followUp({ embeds: [embed] });
+				logger.log(interaction.guild.id, interaction.member.id, song.title, song.url, song.duration, song.thumbnail, 'play')
+			}
+			console.log(queue);
+			*/			// END OF THE CODE
+
+			
 			const connection = joinVoiceChannel({
 				channelId: interaction.member.voice.channel.id,
 				guildId: interaction.member.guild.id,
 				adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
 			});
-			var stream = await ytdl(song?.url, {
+			var stream = await ytdl(song.url, {
 					highWaterMark: 1 << 25,
 					filter: 'audioonly',
 			});
@@ -87,7 +137,7 @@ module.exports = {
 			}
 			const playing = embeds.playing(song);
 			interaction.editReply({ embeds: [playing] });
-
+			
 			player.on(AudioPlayerStatus.Idle, () => {
 				var [h,mi,s,d,mo,y] = time.execute();
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': Stopped playing and left');
@@ -95,6 +145,7 @@ module.exports = {
 				interaction.followUp({ embeds: [stopped] });
 				connection.destroy();
 			});
+			
 		}
 		else {
 			interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });

@@ -6,7 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stop')
 		.setDescription('Stops the current playing music and leaves the Voice Channel'),
-	async execute(interaction: { member: { voice: { channel: { guild: { id: string; }; }; }; }; guild: { name: string; }; reply: (arg0: { embeds?: Discord.MessageEmbed[]; content?: string; allowedMentions?: { repliedUser: boolean; }; }) => void; }) {
+	async execute(interaction) {
 		if (interaction.member.voice.channel) {
 			const connection = getVoiceConnection(interaction.member.voice.channel.guild.id);
 			console.log(interaction.guild.name + ': Stopped playing Music and left the Voice Channel');

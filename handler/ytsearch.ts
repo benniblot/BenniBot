@@ -1,11 +1,12 @@
 import puppeteer from 'puppeteer'
 import cheerio from 'cheerio'
-module.exports = {
-    name: 'ytsearch',
-    async execute (targetsong: string) {
-        // getting HTML Code from Website
+export default class YTSearch {
+    name: 'ytsearch'
+	static async execute(targetsong: string) {
+		// getting HTML Code from Website
         const browser = await puppeteer.launch({
             args: ['--no-sandbox'],
+            headless: false
           })
 
         const page = await browser.newPage()
@@ -23,9 +24,7 @@ module.exports = {
         const element = $("div[id=dismissible] ytd-thumbnail a[class='yt-simple-endpoint inline-block style-scope ytd-thumbnail']")
         const link = element.attr("href")
         const id = link!.split("=") 
-        const song = id[1]
-        
-        // Returning the Link to the Song
-        return song       
-    }
-};
+        const song = id[1]      
+        return song   
+	}
+}

@@ -42,9 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var builders_1 = require("@discordjs/builders");
 var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var voice_1 = require("@discordjs/voice");
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-var ytsearch = require('../handler/ytsearch');
+var ytsearch_1 = __importDefault(require("../handler/ytsearch"));
 var time = require('../handler/time');
 var embeds = require('../handler/embeds');
 var logger = require('../handler/VoiceStateLogger');
@@ -56,6 +54,14 @@ module.exports = {
         return option.setName('url')
             .setDescription('YouTube URL or Name of the Song')
             .setRequired(true);
+    })
+        .addStringOption(function (option) {
+        return option.setName('volume')
+            .setDescription('Volume of the Song');
+    })
+        .addStringOption(function (option) {
+        return option.setName('loop')
+            .setDescription('Loop the Song');
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
@@ -91,7 +97,7 @@ module.exports = {
                     case 4: return [3 /*break*/, 9];
                     case 5:
                         _b.trys.push([5, 8, , 9]);
-                        return [4 /*yield*/, ytsearch.execute(targetsong)];
+                        return [4 /*yield*/, ytsearch_1.default.execute(targetsong)];
                     case 6:
                         result = _b.sent();
                         return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(result)];
@@ -114,7 +120,7 @@ module.exports = {
                             guildId: interaction.member.guild.id,
                             adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
                         });
-                        return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song_1 === null || song_1 === void 0 ? void 0 : song_1.url, {
+                        return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song_1.url, {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
                             })];

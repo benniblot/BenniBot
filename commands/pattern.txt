@@ -1,0 +1,32 @@
+// command pattern
+import { SlashCommandBuilder } from '@discordjs/builders'
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('[name]')
+		.setDescription('[description]'),
+		.addStringOption(option =>
+			option.setName('[option name]')
+				.setDescription('description')
+				.setRequired(true))
+	execute(interaction) {
+		
+	},
+};
+
+// event pattern
+module.exports = {
+	name: '[eventname]',
+	once: true,
+	execute([Parameters]) {
+		// Code that gets executed when the event accures
+	},
+}
+
+// own written handler pattern
+export default class [name of handler] {
+    name: '[name of handler]'
+	execute([parameters]) {     
+        return [return value] 
+	}
+}

@@ -1,10 +1,9 @@
 import { bot_info } from '../config.json'
-const ytsearch = require('../handler/ytsearch.js')
 
 module.exports = {
 	name: 'ready',
 	once: true,
-	execute(client: { user: { setActivity: (arg0: string, arg1: { type: string }) => void; tag: any } }) {
+	execute(client) {
 		client.user.setActivity('Version ' + bot_info.version, {
 			type: 'PLAYING',
 		})

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var config_json_1 = require("../config.json");
-var ytsearch = require('../handler/ytsearch.js');
 module.exports = {
     name: 'ready',
     once: true,
