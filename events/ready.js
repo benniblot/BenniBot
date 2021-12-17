@@ -5,7 +5,7 @@ module.exports = {
     name: 'ready',
     once: true,
     execute: function (client) {
-        client.user.setActivity('Version ' + config_json_1.bot_info.version, {
+        client.user.setActivity('V ' + config_json_1.bot_info.version + ' Hi :)', {
             type: 'PLAYING',
         });
         console.log("" + client.user.tag + ' Version ' + config_json_1.bot_info.version + ' started sucessfully!');
