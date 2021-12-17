@@ -4,10 +4,10 @@ module.exports = {
 	name: 'ready',
 	once: true,
 	execute(client) {
-		client.user.setActivity('Version ' + bot_info.version, {
+		client.user.setActivity('V ' + bot_info.version + ' Hi :)', {
 			type: 'PLAYING',
 		})
-		console.log('V ' + bot_info.version + ' Hi :)')
+		console.log(`${client.user.tag}` + ' Version ' + bot_info.version + ' started sucessfully!')
 		/*
 		Version INFO: <Major.Minor.Revision.Build>
 		- Major is a major update to the software
