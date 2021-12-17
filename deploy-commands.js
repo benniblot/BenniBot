@@ -2,6 +2,8 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { clientId, guildId } = require('./config.json');
 const fs = require('fs');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -11,7 +13,7 @@ for (const file of commandFiles) {
 	commands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: '9' }).setToken("NjkyMjk2MDE2MTgyOTAyODE0.Xnsc6A.wjtS0QqZnDRd4jE4LqnuMqFF6GE");
+const rest = new REST({ version: '9' }).setToken(process.env.token);
 
 (async () => {
 	try {
