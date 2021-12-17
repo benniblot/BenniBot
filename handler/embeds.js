@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var discord_js_1 = __importDefault(require("discord.js"));
 module.exports = {
     name: 'embeds',
-    playing: function (song) {
+    playing: function (song, volume) {
         var minutes = Math.floor(song.duration / 60);
         var seconds = song.duration - minutes * 60;
         var playing = new discord_js_1.default.MessageEmbed()
@@ -26,7 +26,7 @@ module.exports = {
         }
         playing.addFields({
             name: 'Now playing: ',
-            value: song.title + "\n" + song.url,
+            value: song.title + "\n" + song.url + "\nVolume: " + volume,
             inline: false,
         })
             .setThumbnail(song.thumbnail);

@@ -6,7 +6,7 @@ export default class YTSearch {
 		// getting HTML Code from Website
         const browser = await puppeteer.launch({
             args: ['--no-sandbox'],
-            headless: false
+            headless: true
           })
 
         const page = await browser.newPage()

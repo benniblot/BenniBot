@@ -1,10 +1,7 @@
-const fs = require('fs');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { clientId, guildId } = require('./config.json');
-require('dotenv').config({
-	path: '.env',
-});
+const fs = require('fs');
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -14,18 +11,25 @@ for (const file of commandFiles) {
 	commands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: '9' }).setToken(process.env.token);
+const rest = new REST({ version: '9' }).setToken("NjkyMjk2MDE2MTgyOTAyODE0.Xnsc6A.wjtS0QqZnDRd4jE4LqnuMqFF6GE");
 
 (async () => {
 	try {
+		console.log('Started refreshing application (/) commands.');
+
+		// Guild only Slash Commands
 		await rest.put(
-			// register Global Commands
-			Routes.applicationCommands(clientId),
-			// Routes.applicationGuildCommands(clientId, guildId),
+			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
 		);
 
-		console.log('Successfully registered application commands.');
+		// Global Commands
+		/*await rest.put(
+			Routes.applicationCommands(clientId),
+			{ body: commands },
+		);*/
+
+		console.log('Successfully reloaded application (/) commands.');
 	} catch (error) {
 		console.error(error);
 	}

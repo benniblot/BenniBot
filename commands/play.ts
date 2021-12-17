@@ -7,8 +7,10 @@ import {
 	createAudioResource,
 	joinVoiceChannel,
 } from '@discordjs/voice'
+import Discord from 'discord.js'
 
 import ytsearch from '../handler/ytsearch' 
+import { MessageActionRow, MessageButton } from 'discord.js'
 const time = require('../handler/time')
 const embeds = require('../handler/embeds') 
 const logger = require('../handler/VoiceStateLogger')
@@ -119,10 +121,15 @@ module.exports = {
 			var stream = await ytdl(song.url, {
 					highWaterMark: 1 << 25,
 					filter: 'audioonly',
+					quality: 'highestaudio'
 			});
-			
+			const volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
+
 			const player = createAudioPlayer();
-			const resource = createAudioResource(stream, { inputType: StreamType.Opus });
+			const resource = createAudioResource(stream, { inputType: StreamType.Opus, inlineVolume: true });
+		
+			resource.volume.setVolume(volume);
+
 			connection.subscribe(player);
 			player.play(resource);
 
@@ -135,7 +142,8 @@ module.exports = {
 			if(song){
 				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
 			}
-			const playing = embeds.playing(song);
+			const playing = embeds.playing(song, volume);
+
 			interaction.editReply({ embeds: [playing] });
 			
 			player.on(AudioPlayerStatus.Idle, () => {

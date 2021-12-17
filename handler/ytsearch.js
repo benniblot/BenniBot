@@ -51,7 +51,7 @@ var YTSearch = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, puppeteer_1.default.launch({
                             args: ['--no-sandbox'],
-                            headless: false
+                            headless: true
                         })];
                     case 1:
                         browser = _a.sent();

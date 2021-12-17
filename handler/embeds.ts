@@ -2,7 +2,7 @@ import Discord from 'discord.js'
 
 module.exports = {
     name: 'embeds',
-    playing(song: { duration: number; title: string; url: string; thumbnail: any; }) {
+    playing(song: { duration: number; title: string; url: string; thumbnail: any; }, volume) {
         const minutes = Math.floor(song.duration / 60);
         const seconds = song.duration - minutes * 60;
 
@@ -20,7 +20,7 @@ module.exports = {
         }
         playing.addFields({
                 name: 'Now playing: ',
-                value: song.title + "\n" + song.url,
+                value: song.title + "\n" + song.url + "\nVolume: " + volume,
                 inline: false,
             })
             .setThumbnail(song.thumbnail);

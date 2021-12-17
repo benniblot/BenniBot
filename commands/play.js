@@ -65,7 +65,7 @@ module.exports = {
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, player, resource, _a, h, mi, s, d, mo, y, playing;
+            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, volume, player, resource, _a, h, mi, s, d, mo, y, playing;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -123,11 +123,14 @@ module.exports = {
                         return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song_1.url, {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
+                                quality: 'highestaudio'
                             })];
                     case 10:
                         stream = _b.sent();
+                        volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
                         player = (0, voice_1.createAudioPlayer)();
-                        resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus });
+                        resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus, inlineVolume: true });
+                        resource.volume.setVolume(volume);
                         connection_1.subscribe(player);
                         player.play(resource);
                         // Execute the VoiceStateLogger to log the current state of the player when DevMode is true
@@ -138,7 +141,7 @@ module.exports = {
                         if (song_1) {
                             console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song_1.title);
                         }
-                        playing = embeds.playing(song_1);
+                        playing = embeds.playing(song_1, volume);
                         interaction.editReply({ embeds: [playing] });
                         player.on(voice_1.AudioPlayerStatus.Idle, function () {
                             var _a = time.execute(), h = _a[0], mi = _a[1], s = _a[2], d = _a[3], mo = _a[4], y = _a[5];
