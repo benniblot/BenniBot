@@ -1,11 +1,12 @@
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
 import cheerio from 'cheerio'
 export default class YTSearch {
     name: 'ytsearch'
 	static async execute(targetsong: string) {
 		// getting HTML Code from Website
         const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            args: ['--no-sandbox'],
+            executablePath: '/usr/bin/chromium-browser',
         });
 
         const page = await browser.newPage()
