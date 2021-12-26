@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var puppeteer_1 = __importDefault(require("puppeteer"));
+var puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 var cheerio_1 = __importDefault(require("cheerio"));
 var YTSearch = /** @class */ (function () {
     function YTSearch() {
@@ -49,8 +49,9 @@ var YTSearch = /** @class */ (function () {
             var browser, page, pageData, $, element, link, id, song;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, puppeteer_1.default.launch({
-                            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                    case 0: return [4 /*yield*/, puppeteer_core_1.default.launch({
+                            args: ['--no-sandbox'],
+                            executablePath: '/usr/bin/chromium-browser',
                         })];
                     case 1:
                         browser = _a.sent();
