@@ -5,9 +5,8 @@ export default class YTSearch {
 	static async execute(targetsong: string) {
 		// getting HTML Code from Website
         const browser = await puppeteer.launch({
-            args: ['--no-sandbox'],
-            headless: true
-          })
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        });
 
         const page = await browser.newPage()
         await page.goto("https://www.youtube.com/results?search_query=" + targetsong.replace(/ /g,"+"))

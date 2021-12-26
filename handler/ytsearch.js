@@ -50,8 +50,7 @@ var YTSearch = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, puppeteer_1.default.launch({
-                            args: ['--no-sandbox'],
-                            headless: true
+                            args: ['--no-sandbox', '--disable-setuid-sandbox'],
                         })];
                     case 1:
                         browser = _a.sent();
