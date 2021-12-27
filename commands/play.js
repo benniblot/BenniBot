@@ -43,7 +43,6 @@ var builders_1 = require("@discordjs/builders");
 var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var voice_1 = require("@discordjs/voice");
 var ytsearch_1 = __importDefault(require("../handler/ytsearch"));
-var time = require('../handler/time');
 var embeds = require('../handler/embeds');
 var logger = require('../handler/VoiceStateLogger');
 module.exports = {
@@ -65,9 +64,9 @@ module.exports = {
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, volume, player, resource, _a, h, mi, s, d, mo, y, playing;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, volume, player, resource, playing;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         interaction.deferReply();
                         if (!interaction.member.voice.channel) return [3 /*break*/, 11];
@@ -77,12 +76,12 @@ module.exports = {
                         songData = null;
                         song_1 = null;
                         if (!YoutubeCheck) return [3 /*break*/, 5];
-                        _b.label = 1;
+                        _a.label = 1;
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
+                        _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(interaction.options.getString('url'))];
                     case 2:
-                        songData = _b.sent();
+                        songData = _a.sent();
                         song_1 = {
                             title: songData.videoDetails.title,
                             url: songData.videoDetails.video_url,
@@ -91,18 +90,18 @@ module.exports = {
                         };
                         return [3 /*break*/, 4];
                     case 3:
-                        error_1 = _b.sent();
+                        error_1 = _a.sent();
                         console.error(Error);
                         return [3 /*break*/, 4];
                     case 4: return [3 /*break*/, 9];
                     case 5:
-                        _b.trys.push([5, 8, , 9]);
+                        _a.trys.push([5, 8, , 9]);
                         return [4 /*yield*/, ytsearch_1.default.execute(targetsong)];
                     case 6:
-                        result = _b.sent();
+                        result = _a.sent();
                         return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(result)];
                     case 7:
-                        songData = _b.sent();
+                        songData = _a.sent();
                         song_1 = {
                             title: songData.videoDetails.title,
                             url: songData.videoDetails.video_url,
@@ -111,7 +110,7 @@ module.exports = {
                         };
                         return [3 /*break*/, 9];
                     case 8:
-                        error_2 = _b.sent();
+                        error_2 = _a.sent();
                         console.log(error_2);
                         return [3 /*break*/, 9];
                     case 9:
@@ -126,7 +125,7 @@ module.exports = {
                                 quality: 'highestaudio'
                             })];
                     case 10:
-                        stream = _b.sent();
+                        stream = _a.sent();
                         volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
                         player = (0, voice_1.createAudioPlayer)();
                         resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus, inlineVolume: true });
@@ -137,15 +136,13 @@ module.exports = {
                         if (process.env.DEV_MODE === "true") {
                             logger.execute(connection_1, player);
                         }
-                        _a = time.execute(), h = _a[0], mi = _a[1], s = _a[2], d = _a[3], mo = _a[4], y = _a[5];
                         if (song_1) {
-                            console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song_1.title);
+                            console.log(interaction.guild.name + ': playing - ' + song_1.title);
                         }
                         playing = embeds.playing(song_1, volume);
                         interaction.editReply({ embeds: [playing] });
                         player.on(voice_1.AudioPlayerStatus.Idle, function () {
-                            var _a = time.execute(), h = _a[0], mi = _a[1], s = _a[2], d = _a[3], mo = _a[4], y = _a[5];
-                            console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': Stopped playing and left');
+                            console.log(interaction.guild.name + ': Stopped playing and left');
                             var stopped = embeds.stopped(song_1);
                             interaction.followUp({ embeds: [stopped] });
                             connection_1.destroy();
@@ -153,7 +150,7 @@ module.exports = {
                         return [3 /*break*/, 12];
                     case 11:
                         interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
-                        _b.label = 12;
+                        _a.label = 12;
                     case 12: return [2 /*return*/];
                 }
             });

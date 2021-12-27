@@ -11,7 +11,6 @@ import Discord from 'discord.js'
 
 import ytsearch from '../handler/ytsearch' 
 import { MessageActionRow, MessageButton } from 'discord.js'
-const time = require('../handler/time')
 const embeds = require('../handler/embeds') 
 const logger = require('../handler/VoiceStateLogger')
 
@@ -137,18 +136,16 @@ module.exports = {
 			if(process.env.DEV_MODE === "true"){
 				logger.execute(connection,player)
 			}
-			
-			var [h,mi,s,d,mo,y] = time.execute();
+
 			if(song){
-				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': playing - ' + song.title);
+				console.log(interaction.guild.name + ': playing - ' + song.title);
 			}
 			const playing = embeds.playing(song, volume);
 
 			interaction.editReply({ embeds: [playing] });
 			
 			player.on(AudioPlayerStatus.Idle, () => {
-				var [h,mi,s,d,mo,y] = time.execute();
-				console.log('[' + d + '-' + mo + '-' + y + ' ' + h + ':' + mi + ':' + s + '] ' + interaction.guild.name + ': Stopped playing and left');
+				console.log(interaction.guild.name + ': Stopped playing and left');
 				const stopped = embeds.stopped(song);
 				interaction.followUp({ embeds: [stopped] });
 				connection.destroy();
