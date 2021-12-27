@@ -138,14 +138,14 @@ module.exports = {
 			}
 
 			if(song){
-				console.log('[Play] ' + song.title + ' on ' + interaction.guild.name + ' by ' + interaction.member.user.username);
+				console.log('[Play] "' + song.title + '" on "' + interaction.guild.name + '" by "' + interaction.member.user.username + '"');
 			}
 			const playing = embeds.playing(song, volume);
 
 			interaction.editReply({ embeds: [playing] });
 			
 			player.on(AudioPlayerStatus.Idle, () => {
-				console.log('[AutoStop] on' + interaction.guild.name);
+				console.log('[AutoStop] on "' + interaction.guild.name + '"');
 				const stopped = embeds.stopped(song);
 				interaction.followUp({ embeds: [stopped] });
 				connection.destroy();

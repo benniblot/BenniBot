@@ -137,12 +137,12 @@ module.exports = {
                             logger.execute(connection_1, player);
                         }
                         if (song_1) {
-                            console.log('[Play] ' + song_1.title + ' on ' + interaction.guild.name + ' by ' + interaction.member.user.username);
+                            console.log('[Play] "' + song_1.title + '" on "' + interaction.guild.name + '" by "' + interaction.member.user.username + '"');
                         }
                         playing = embeds.playing(song_1, volume);
                         interaction.editReply({ embeds: [playing] });
                         player.on(voice_1.AudioPlayerStatus.Idle, function () {
-                            console.log('[AutoStop] on' + interaction.guild.name);
+                            console.log('[AutoStop] on "' + interaction.guild.name + '"');
                             var stopped = embeds.stopped(song_1);
                             interaction.followUp({ embeds: [stopped] });
                             connection_1.destroy();
