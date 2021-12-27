@@ -6,8 +6,8 @@ module.exports = {
     name: 'ready',
     once: true,
     execute: function (client) {
-        client.user.setActivity('Merry Christmas :)', {
-            type: 'LISTENING',
+        client.user.setActivity(config_json_1.bot_info, {
+            type: 'PLAYING',
         });
         console.log("" + client.user.tag + ' Version ' + config_json_1.bot_info.version + ' started sucessfully!');
         if (process.env.DEV_MODE === "true") {
