@@ -9,7 +9,7 @@ module.exports = {
 	async execute(interaction) {
 		if (interaction.member.voice.channel) {
 			const connection = getVoiceConnection(interaction.member.voice.channel.guild.id);
-			console.log(interaction.guild.name + ': Stopped playing Music and left the Voice Channel');
+			console.log('[Stop] by ' + interaction.member.user.username + ' on ' + interaction.guild.name);
 			const stopped = new Discord.MessageEmbed()
 				.setColor('#0000ff')
 				.setTitle('BenniBot')
