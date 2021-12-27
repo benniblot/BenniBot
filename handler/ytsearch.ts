@@ -3,6 +3,7 @@ import cheerio from 'cheerio'
 export default class YTSearch {
     name: 'ytsearch'
 	static async execute(targetsong: string) {
+        console.log(`[YTSearch] Searching for ${targetsong}`)
 		// getting HTML Code from Website
         const browser = await puppeteer.launch({
             args: ['--no-sandbox'],

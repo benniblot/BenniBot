@@ -49,10 +49,12 @@ var YTSearch = /** @class */ (function () {
             var browser, page, pageData, $, element, link, id, song;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, puppeteer_core_1.default.launch({
-                            args: ['--no-sandbox'],
-                            executablePath: '/usr/bin/chromium-browser',
-                        })];
+                    case 0:
+                        console.log("[YTSearch] Searching for " + targetsong);
+                        return [4 /*yield*/, puppeteer_core_1.default.launch({
+                                args: ['--no-sandbox'],
+                                executablePath: '/usr/bin/chromium-browser',
+                            })];
                     case 1:
                         browser = _a.sent();
                         return [4 /*yield*/, browser.newPage()];
