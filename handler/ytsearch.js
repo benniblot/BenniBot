@@ -50,7 +50,7 @@ var YTSearch = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("[YTSearch] Searching for \"" + targetsong + "\"");
+                        console.log("[YTSearch] Searching for \"".concat(targetsong, "\""));
                         return [4 /*yield*/, puppeteer_core_1.default.launch({
                                 args: ['--no-sandbox'],
                                 executablePath: '/usr/bin/chromium-browser',

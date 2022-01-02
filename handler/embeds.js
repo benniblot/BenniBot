@@ -13,16 +13,16 @@ module.exports = {
             .setColor('GREEN')
             .setTitle('BenniBot');
         if (minutes === 0 && seconds === 0) {
-            playing.setFooter('Live');
+            playing.setFooter({ text: 'Live' });
         }
         else if (minutes === 0 && seconds > 0) {
-            playing.setFooter(seconds + 's');
+            playing.setFooter({ text: seconds + 's' });
         }
         else if (minutes > 0 && seconds === 0) {
-            playing.setFooter(minutes + 'm');
+            playing.setFooter({ text: minutes + 'm' });
         }
         else {
-            playing.setFooter(minutes + 'm ' + seconds + 's');
+            playing.setFooter({ text: minutes + 'm ' + seconds + 's' });
         }
         playing.addFields({
             name: 'Now playing: ',

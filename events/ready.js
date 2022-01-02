@@ -9,7 +9,7 @@ module.exports = {
         client.user.setActivity(config_json_1.bot_info.version, {
             type: 'PLAYING',
         });
-        console.log("" + client.user.tag + ' Version ' + config_json_1.bot_info.version + ' started sucessfully!');
+        console.log("".concat(client.user.tag) + ' Version ' + config_json_1.bot_info.version + ' started sucessfully!');
         if (process.env.DEV_MODE === "true") {
             console.log(generateDependencyReport());
         }
