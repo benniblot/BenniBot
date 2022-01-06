@@ -29,7 +29,7 @@ If you have any question feels free to contact me ^^
 
 ## Invite BenniBot to your Server
 
-If you want to test BenniBot or just use it you can invite him <a href="https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot%20applications.commands">here</a>
+If you want to test BenniBot or just use it, you can invite him <a href="https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot%20applications.commands">here</a>
 
 ## Contact
 
