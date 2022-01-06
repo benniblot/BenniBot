@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://github.com/Benni0109/BenniBot/"><img src="https://cdn.discordapp.com/app-icons/692296016182902814/26b89316b43fc90300d131693cbfc728.png" width="128" alt="BenniBot Logo" /></a>
+    <a href="https://github.com/Benni0109/BenniBot/"><img src="https://cdn.discordapp.com/app-icons/692296016182902814/98c42fef88491ef6f30692964968a7af.png" width="128" alt="BenniBot Logo" /></a>
   </p>
   <br />
   <p>
