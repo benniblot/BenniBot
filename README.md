@@ -7,7 +7,7 @@
   <p>
     <a href="https://discord.gg/bFbBJYdeBf"><img src="https://img.shields.io/discord/866270060477153291?color=white&label=Discord Server&logo=Discord&logoColor=white&style=plastic" alt="Discord server" /></a>
     <img src="https://img.shields.io/github/package-json/version/Benni0109/BenniBot?color=green&label=Version&style=plastic" alt="npm version" />
-    <img src="https://img.shields.io/tokei/lines/github/Benni0109/BenniBot?color=blue&label=Lines of Code&style=plastic" alt="Lines of Code" />
+    <img src="https://img.shields.io/github/last-commit/Benni0109/BenniBot/main?color=blue&label=Last Commit&style=plastic" alt="Last Commit" />
     <a href="https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot%20applications.commands"><img src="https://img.shields.io/badge/Invite-BenniBot-white?color=red&style=plastic" alt="invite BenniBot to your Server" /></a>
     
   </p>
