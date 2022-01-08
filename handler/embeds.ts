@@ -12,11 +12,11 @@ module.exports = {
         if (minutes === 0 && seconds === 0) {
             playing.setFooter({text: 'Live'});
         } else if (minutes === 0 && seconds > 0) {
-            playing.setFooter({text:seconds + 's'});
+            playing.setFooter({text: seconds + 's'});
         } else if (minutes > 0 && seconds === 0) {
-            playing.setFooter({text:minutes + 'm'});
+            playing.setFooter({text: minutes + 'm'});
         } else {
-            playing.setFooter({text:minutes + 'm ' + seconds + 's'});
+            playing.setFooter({text: minutes + 'm ' + seconds + 's'});
         }
         playing.addFields({
                 name: 'Now playing: ',

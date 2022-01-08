@@ -66,51 +66,6 @@ module.exports = {
 					console.log(error);
 				}
 			}
-
-			/*// save the songs in a queue to play later
-			const queue = interaction.guild.voice.queue;
-			if (song) {
-				queue.push(song);
-			}
-			if (queue.length === 1) {
-				const voiceAdapter = interaction.guild.voice.voiceAdapterCreator.createVoiceAdapter(interaction.guild.id);
-				const voiceConnection = await joinVoiceChannel({
-					guildId: interaction.guild.id, 
-					channelId: interaction.member.voice.channel.id, 
-					adapterCreator: voiceAdapter
-				});
-				const audioPlayer = createAudioPlayer();
-				try{
-					var stream = await ytdl(song.url, {
-					filter: 'audioonly',
-					quality: 'highestaudio',
-					highWaterMark: 1 << 25
-					});
-				} catch (error) {
-					console.log(error);
-				}
-				const audioResource = createAudioResource(stream, { inputType: StreamType.Opus });
-				voiceConnection.subscribe(audioPlayer);
-				audioPlayer.play(audioResource);
-				if (AudioPlayerStatus.Playing) {
-					const embed = embeds.createEmbed(song.title, song.thumbnail, song.duration);
-					interaction.editReply({ embeds: [embed] });
-					interaction.followUp({ embeds: [embed] });
-					logger.log(interaction.guild.id, interaction.member.id, song.title, song.url, song.duration, song.thumbnail, 'play')
-				}
-				else {
-					interaction.reply({ content: 'Something went wrong while playing the song', allowedMentions: { repliedUser: true } });
-				}
-			}
-			else {
-				const embed = embeds.createEmbed(song.title, song.thumbnail, song.duration);
-				interaction.editReply({ embeds: [embed] });
-				interaction.followUp({ embeds: [embed] });
-				logger.log(interaction.guild.id, interaction.member.id, song.title, song.url, song.duration, song.thumbnail, 'play')
-			}
-			console.log(queue);
-			*/			// END OF THE CODE
-
 			
 			const connection = joinVoiceChannel({
 				channelId: interaction.member.voice.channel.id,
