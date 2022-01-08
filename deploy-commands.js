@@ -20,16 +20,16 @@ const rest = new REST({ version: '9' }).setToken(process.env.token);
 		console.log('Started refreshing application (/) commands.');
 
 		// Guild only Slash Commands
-		await rest.put(
+		/*await rest.put(
 			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
-		);
+		);*/
 
 		// Global Commands
-		/*await rest.put(
+		await rest.put(
 			Routes.applicationCommands(clientId),
 			{ body: commands },
-		);*/
+		);
 
 		console.log('Successfully reloaded application (/) commands.');
 	} catch (error) {
