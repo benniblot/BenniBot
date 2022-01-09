@@ -7,10 +7,8 @@ import {
 	createAudioResource,
 	joinVoiceChannel,
 } from '@discordjs/voice'
-import Discord from 'discord.js'
 
 import ytsearch from '../handler/ytsearch' 
-import { MessageActionRow, MessageButton } from 'discord.js'
 const embeds = require('../handler/embeds') 
 const logger = require('../handler/VoiceStateLogger')
 
