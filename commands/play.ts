@@ -1,5 +1,4 @@
 import { SlashCommandBuilder } from '@discordjs/builders'
-import ytdl from 'ytdl-core-discord'
 import {
 	AudioPlayerStatus,
 	StreamType,
@@ -7,8 +6,10 @@ import {
 	createAudioResource,
 	joinVoiceChannel,
 } from '@discordjs/voice'
+import ytdl from 'ytdl-core-discord'
+import ytsr from 'ytsr'
+import chalk from 'chalk'
 
-import ytsearch from '../handler/ytsearch' 
 const embeds = require('../handler/embeds') 
 const logger = require('../handler/VoiceStateLogger')
 
@@ -49,11 +50,10 @@ module.exports = {
 				}
 			}
 			else {
-
 				try {
-					 const result:string = await ytsearch.execute(targetsong);
-					 songData = await ytdl.getInfo(result);
-					 song = {
+					const resultId = (await ytsr(targetsong, {"limit" : 1})).items[0]["url"].split("=");
+					songData = await ytdl.getInfo(resultId[1])
+					song = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,
 						duration: songData.videoDetails.lengthSeconds,
@@ -73,12 +73,12 @@ module.exports = {
 			var stream = await ytdl(song.url, {
 					highWaterMark: 1 << 25,
 					filter: 'audioonly',
-					quality: 'highestaudio'
+					quality: 'highestaudio',
 			});
 			const volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
 
 			const player = createAudioPlayer();
-			const resource = createAudioResource(stream, { inputType: StreamType.Opus, inlineVolume: true });
+			const resource = createAudioResource(stream, { inputType: StreamType.Opus, inlineVolume: true, });
 		
 			resource.volume.setVolume(volume);
 
@@ -91,7 +91,7 @@ module.exports = {
 			}
 
 			if(song){
-				console.log('[Play] "' + song.title + '" on "' + interaction.guild.name + '" by "' + interaction.member.user.username + '"');
+				console.log('[Play] ' + chalk.gray(`${song.title}`) + ' on ' + chalk.gray(`${interaction.guild.name}`) + ' by ' + chalk.gray(`${interaction.member.user.username}`))
 			}
 			const playing = embeds.playing(song, volume);
 

@@ -2,7 +2,7 @@
     "prefix": ".",
     "bot_info": {
         "name": "BenniBot",
-        "version": "4.4.5"
+        "version": "4.4.9"
     },
     "inviteURL": "https://discord.com/api/oauth2/authorize?client_id=692296016182902814&permissions=8&scope=bot%20applications.commands",
     "owner_id": "497740534828498950",

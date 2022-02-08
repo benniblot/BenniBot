@@ -1,5 +1,6 @@
 .eslintrc.json
 .env
+.vscode
 archive
 node_modules
 package-lock.json

@@ -40,9 +40,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var builders_1 = require("@discordjs/builders");
-var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var voice_1 = require("@discordjs/voice");
-var ytsearch_1 = __importDefault(require("../handler/ytsearch"));
+var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
+var ytsr_1 = __importDefault(require("ytsr"));
+var chalk_1 = __importDefault(require("chalk"));
 var embeds = require('../handler/embeds');
 var logger = require('../handler/VoiceStateLogger');
 module.exports = {
@@ -64,7 +65,7 @@ module.exports = {
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, result, error_2, connection_1, stream, volume, player, resource, playing;
+            var targetsong, YoutubeCheckPattern, YoutubeCheck, songData, song_1, error_1, resultId, error_2, connection_1, stream, volume, player, resource, playing;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -96,10 +97,10 @@ module.exports = {
                     case 4: return [3 /*break*/, 9];
                     case 5:
                         _a.trys.push([5, 8, , 9]);
-                        return [4 /*yield*/, ytsearch_1.default.execute(targetsong)];
+                        return [4 /*yield*/, (0, ytsr_1.default)(targetsong, { "limit": 1 })];
                     case 6:
-                        result = _a.sent();
-                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(result)];
+                        resultId = (_a.sent()).items[0]["url"].split("=");
+                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(resultId[1])];
                     case 7:
                         songData = _a.sent();
                         song_1 = {
@@ -122,13 +123,13 @@ module.exports = {
                         return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song_1.url, {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
-                                quality: 'highestaudio'
+                                quality: 'highestaudio',
                             })];
                     case 10:
                         stream = _a.sent();
                         volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
                         player = (0, voice_1.createAudioPlayer)();
-                        resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus, inlineVolume: true });
+                        resource = (0, voice_1.createAudioResource)(stream, { inputType: voice_1.StreamType.Opus, inlineVolume: true, });
                         resource.volume.setVolume(volume);
                         connection_1.subscribe(player);
                         player.play(resource);
@@ -137,7 +138,7 @@ module.exports = {
                             logger.execute(connection_1, player);
                         }
                         if (song_1) {
-                            console.log('[Play] "' + song_1.title + '" on "' + interaction.guild.name + '" by "' + interaction.member.user.username + '"');
+                            console.log('[Play] ' + chalk_1.default.gray("".concat(song_1.title)) + ' on ' + chalk_1.default.gray("".concat(interaction.guild.name)) + ' by ' + chalk_1.default.gray("".concat(interaction.member.user.username)));
                         }
                         playing = embeds.playing(song_1, volume);
                         interaction.editReply({ embeds: [playing] });
