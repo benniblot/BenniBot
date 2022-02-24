@@ -17,7 +17,7 @@
   "author": "Benni0109",
   "license": "ISC",
   "engines": {
-    "node": "^17.5"
+    "node": "^17.6"
   },
   "bugs": {
     "url": "https://github.com/Benni0109/BenniBot/issues"
