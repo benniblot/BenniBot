@@ -21,12 +21,12 @@ module.exports = {
 			option.setName('url')
 				.setDescription('YouTube URL or Name of the Song')
 				.setRequired(true))
-		.addStringOption(option => 
+		.addStringOption(option =>
 			option.setName('volume')
 				.setDescription('Volume of the Song'))
 		.addStringOption(option =>
 			option.setName('loop')
-				.setDescription('Loop the Song')),	
+				.setDescription('Loop the Song')), 
 	async execute(interaction) {
 		interaction.deferReply();
 		if (interaction.member.voice.channel) {
@@ -64,22 +64,22 @@ module.exports = {
 					console.log(error);
 				}
 			}
-			
+
 			const connection = joinVoiceChannel({
 				channelId: interaction.member.voice.channel.id,
 				guildId: interaction.member.guild.id,
 				adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
 			});
-			var stream = await ytdl(song.url, {
-					highWaterMark: 1 << 25,
-					filter: 'audioonly',
-					quality: 'highestaudio',
+			let stream = await ytdl(song.url, {
+				highWaterMark: 1 << 25,
+				filter: 'audioonly',
+				quality: 'highestaudio',
 			});
 			const volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
 
 			const player = createAudioPlayer();
 			const resource = createAudioResource(stream, { inputType: StreamType.Opus, inlineVolume: true, });
-		
+
 			resource.volume.setVolume(volume);
 
 			connection.subscribe(player);
@@ -96,17 +96,16 @@ module.exports = {
 			const playing = embeds.playing(song, volume);
 
 			interaction.editReply({ embeds: [playing] });
-			
+
 			player.on(AudioPlayerStatus.Idle, () => {
 				console.log('[AutoStop] on "' + interaction.guild.name + '"');
 				const stopped = embeds.stopped(song);
 				interaction.followUp({ embeds: [stopped] });
 				connection.destroy();
 			});
-			
+
 		}
 		else {
 			interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
 		}
-	},
-};
+	},};
