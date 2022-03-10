@@ -14,9 +14,6 @@
   "keywords": [],
   "author": "Benni0109",
   "license": "ISC",
-  "engines": {
-    "node": "^16.6"
-  },
   "bugs": {
     "url": "https://github.com/Benni0109/BenniBot/issues"
   },
