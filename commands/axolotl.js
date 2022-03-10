@@ -43,20 +43,30 @@ var builders_1 = require("@discordjs/builders");
 var node_fetch_1 = __importDefault(require("node-fetch"));
 module.exports = {
     data: new builders_1.SlashCommandBuilder()
-        .setName('cat')
-        .setDescription('A random cat photo'),
+        .setName('axolotl')
+        .setDescription('A random axolotl photo or a nice fact about them')
+        .addBooleanOption(function (option) {
+        return option.setName('fact')
+            .setDescription('Get a random fact about axolotl')
+            .setRequired(false);
+    }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var file;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a, url, facts;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0: return [4 /*yield*/, interaction.deferReply()];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, (0, node_fetch_1.default)('https://aws.random.cat/meow').then(function (response) { return response.json(); })];
+                        _b.sent();
+                        return [4 /*yield*/, (0, node_fetch_1.default)('https://axoltlapi.herokuapp.com').then(function (response) { return response.json(); })];
                     case 2:
-                        file = (_a.sent()).file;
-                        interaction.editReply({ files: [file] });
+                        _a = _b.sent(), url = _a.url, facts = _a.facts;
+                        if (interaction.options.getBoolean('fact')) {
+                            interaction.followUp({ content: facts });
+                        }
+                        else {
+                            interaction.editReply({ content: url });
+                        }
                         return [2 /*return*/];
                 }
             });

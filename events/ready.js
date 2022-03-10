@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var config_json_1 = require("../config.json");
-var generateDependencyReport = require('@discordjs/voice').generateDependencyReport;
+var voice_1 = require("@discordjs/voice");
 module.exports = {
     name: 'ready',
     once: true,
@@ -11,7 +11,7 @@ module.exports = {
         });
         console.log("".concat(client.user.tag) + ' Version ' + config_json_1.bot_info.version + ' started sucessfully!');
         if (process.env.DEV_MODE === "true") {
-            console.log(generateDependencyReport());
+            console.log((0, voice_1.generateDependencyReport)());
         }
         /*
         Version INFO: <Major.Minor.Revision.Build>

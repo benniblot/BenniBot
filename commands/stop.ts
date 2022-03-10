@@ -8,8 +8,8 @@ module.exports = {
 		.setDescription('Stops the current playing music and leaves the Voice Channel'),
 	async execute(interaction) {
 		if (interaction.member.voice.channel) {
-			const connection = getVoiceConnection(interaction.member.voice.channel.guild.id);
-			console.log('[Stop] by "' + interaction.member.user.username + '" on "' + interaction.guild.name + '"');
+			const connection = getVoiceConnection(interaction.member.voice.channel.guild.id)
+			console.log('[Stop] by "' + interaction.member.user.username + '" on "' + interaction.guild.name + '"')
 			const stopped = new Discord.MessageEmbed()
 				.setColor('#0000ff')
 				.setTitle('BenniBot')
@@ -19,12 +19,12 @@ module.exports = {
 					value: 'Leaving the Voice Channel',
 					inline: true,
 				});
-				interaction.reply({ embeds: [stopped] });
+				interaction.reply({ embeds: [stopped] })
 			if(connection){
-				connection.destroy();
+				connection.destroy()
 			}
 		} else {
-			interaction.reply({ content: 'You need to join the Voice Channel first!', allowedMentions: { repliedUser: true } });
+			interaction.reply({ content: 'You need to join the Voice Channel first!', allowedMentions: { repliedUser: true } })
 		}
 	},
 };

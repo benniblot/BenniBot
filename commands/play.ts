@@ -28,16 +28,16 @@ module.exports = {
 			option.setName('loop')
 				.setDescription('Loop the Song')), 
 	async execute(interaction) {
-		interaction.deferReply();
+		interaction.deferReply()
 		if (interaction.member.voice.channel) {
-			const targetsong:string = interaction.options.getString('url');
-			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
-			const YoutubeCheck = YoutubeCheckPattern.test(interaction.options.getString('url'));
-			let songData = null;
-			let song: { url: any; title: any; duration: string; thumbnail: string } | null = null;
+			const targetsong:string = interaction.options.getString('url')
+			const YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi
+			const YoutubeCheck = YoutubeCheckPattern.test(interaction.options.getString('url'))
+			let songData = null
+			let song: { url: string; title: string; duration: string; thumbnail: string } = null
 			if (YoutubeCheck) {
 				try {
-					songData = await ytdl.getInfo(interaction.options.getString('url'));
+					songData = await ytdl.getInfo(interaction.options.getString('url'))
 					song = {
 						title: songData.videoDetails.title,
 						url: songData.videoDetails.video_url,
@@ -46,12 +46,12 @@ module.exports = {
 					};
 				}
 				catch (error) {
-					console.error(Error);
+					console.error(Error)
 				}
 			}
 			else {
 				try {
-					const resultId = (await ytsr(targetsong, {"limit" : 1})).items[0]["url"].split("=");
+					const resultId = (await ytsr(targetsong, {"limit" : 1})).items[0]["url"].split("=")
 					songData = await ytdl.getInfo(resultId[1])
 					song = {
 						title: songData.videoDetails.title,
@@ -61,7 +61,7 @@ module.exports = {
 					};
 				}
 				catch (error) {
-					console.log(error);
+					console.log(error)
 				}
 			}
 
@@ -75,15 +75,15 @@ module.exports = {
 				filter: 'audioonly',
 				quality: 'highestaudio',
 			});
-			const volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5';
+			const volume = interaction.options.getString('volume') ? interaction.options.getString('volume') : '0.5'
 
-			const player = createAudioPlayer();
-			const resource = createAudioResource(stream, { inputType: StreamType.Opus, inlineVolume: true, });
+			const player = createAudioPlayer()
+			const resource = createAudioResource(stream, { inputType: StreamType.Opus, inlineVolume: true, })
 
-			resource.volume.setVolume(volume);
+			resource.volume.setVolume(volume)
 
-			connection.subscribe(player);
-			player.play(resource);
+			connection.subscribe(player)
+			player.play(resource)
 
 			// Execute the VoiceStateLogger to log the current state of the player when DevMode is true
 			if(process.env.DEV_MODE === "true"){
@@ -93,19 +93,20 @@ module.exports = {
 			if(song){
 				console.log('[Play] ' + chalk.gray(`${song.title}`) + ' on ' + chalk.gray(`${interaction.guild.name}`) + ' by ' + chalk.gray(`${interaction.member.user.username}`))
 			}
-			const playing = embeds.playing(song, volume);
+			const playing = embeds.playing(song, volume)
 
-			interaction.editReply({ embeds: [playing] });
+			interaction.editReply({ embeds: [playing] })
 
 			player.on(AudioPlayerStatus.Idle, () => {
-				console.log('[AutoStop] on "' + interaction.guild.name + '"');
-				const stopped = embeds.stopped(song);
-				interaction.followUp({ embeds: [stopped] });
-				connection.destroy();
-			});
+				console.log('[AutoStop] on "' + interaction.guild.name + '"')
+				const stopped = embeds.stopped(song)
+				interaction.followUp({ embeds: [stopped] })
+				connection.destroy()
+			})
 
 		}
 		else {
-			interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
+			interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } })
 		}
-	},};
+	},
+}

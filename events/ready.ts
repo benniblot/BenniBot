@@ -1,5 +1,5 @@
 import { bot_info } from '../config.json'
-const { generateDependencyReport } = require('@discordjs/voice');
+import { generateDependencyReport } from '@discordjs/voice'
 
 module.exports = {
 	name: 'ready',
