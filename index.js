@@ -19,14 +19,14 @@ client.commands = new discord_js_1.Collection();
 var commandFiles = fs_1.default.readdirSync('./commands').filter(function (file) { return file.endsWith('.js'); });
 for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
     var file = commandFiles_1[_i];
-    var command = require("./commands/" + file);
+    var command = require("./commands/".concat(file));
     // Set a new item in the Collection
     // With the key as the command name and the value as the exported module
     client.commands.set(command.data.name, command);
 }
 var eventFiles = fs_1.default.readdirSync('./events').filter(function (file) { return file.endsWith('.js'); });
 var _loop_1 = function (file) {
-    var event_1 = require("./events/" + file);
+    var event_1 = require("./events/".concat(file));
     if (event_1.once) {
         client.once(event_1.name, function () {
             var args = [];
