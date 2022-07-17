@@ -1,16 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var discord_js_1 = __importDefault(require("discord.js"));
+var discord_js_1 = require("discord.js");
 module.exports = {
     name: 'embeds',
     playing: function (song, volume) {
         var minutes = Math.floor(song.duration / 60);
         var seconds = song.duration - minutes * 60;
-        var playing = new discord_js_1.default.MessageEmbed()
-            .setColor('GREEN')
+        var playing = new discord_js_1.EmbedBuilder()
+            .setColor(discord_js_1.Colors.Green)
             .setTitle('BenniBot');
         if (minutes === 0 && seconds === 0) {
             playing.setFooter({ text: 'Live' });
@@ -33,8 +30,8 @@ module.exports = {
         return playing;
     },
     stopped: function (song) {
-        var stopped = new discord_js_1.default.MessageEmbed()
-            .setColor('GREEN')
+        var stopped = new discord_js_1.EmbedBuilder()
+            .setColor(discord_js_1.Colors.Green)
             .setTitle('BenniBot')
             .setFooter(song.url)
             .addFields({

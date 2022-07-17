@@ -1,14 +1,14 @@
-import Discord from 'discord.js'
+import { Colors, EmbedBuilder } from 'discord.js'
 
 module.exports = {
     name: 'embeds',
     playing(song: { duration: number; title: string; url: string; thumbnail: any; }, volume) {
         const minutes = Math.floor(song.duration / 60)
         const seconds = song.duration - minutes * 60
-        const playing = new Discord.MessageEmbed()
-            .setColor('GREEN')
+        const playing = new EmbedBuilder()
+            .setColor(Colors.Green)
             .setTitle('BenniBot')
-        
+
         if (minutes === 0 && seconds === 0) {
             playing.setFooter({text: 'Live'})
         } else if (minutes === 0 && seconds > 0) {
@@ -29,8 +29,8 @@ module.exports = {
         return playing
     },
     stopped(song: { url: any; title: string; }) {
-        const stopped = new Discord.MessageEmbed()
-            .setColor('GREEN')
+        const stopped = new EmbedBuilder()
+            .setColor(Colors.Green)
             .setTitle('BenniBot')
             .setFooter(song.url)
             .addFields({

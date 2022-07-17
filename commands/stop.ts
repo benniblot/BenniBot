@@ -10,7 +10,7 @@ module.exports = {
 		if (interaction.member.voice.channel) {
 			const connection = getVoiceConnection(interaction.member.voice.channel.guild.id)
 			console.log('[Stop] by "' + interaction.member.user.username + '" on "' + interaction.guild.name + '"')
-			const stopped = new Discord.MessageEmbed()
+			const stopped = new Discord.EmbedBuilder()
 				.setColor('#0000ff')
 				.setTitle('BenniBot')
 				.setTimestamp()

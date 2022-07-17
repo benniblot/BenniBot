@@ -7,4 +7,4 @@ module.exports = {
 	async execute(interaction: { reply: (arg0: { content: string }) => any }) {
 		await interaction.reply({content: "Pong!"})
 	},
-};
+}

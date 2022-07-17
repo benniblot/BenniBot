@@ -9,10 +9,10 @@ dotenv_1.default.config();
 var fs_1 = __importDefault(require("fs"));
 var client = new discord_js_1.Client({
     intents: [
-        discord_js_1.Intents.FLAGS.GUILDS,
-        discord_js_1.Intents.FLAGS.GUILD_MESSAGES,
-        discord_js_1.Intents.FLAGS.DIRECT_MESSAGES,
-        discord_js_1.Intents.FLAGS.GUILD_VOICE_STATES
+        discord_js_1.GatewayIntentBits.Guilds,
+        discord_js_1.GatewayIntentBits.GuildMessages,
+        discord_js_1.GatewayIntentBits.DirectMessages,
+        discord_js_1.GatewayIntentBits.GuildVoiceStates
     ]
 });
 client.commands = new discord_js_1.Collection();

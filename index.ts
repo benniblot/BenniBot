@@ -1,16 +1,16 @@
-import { Client, Intents, Collection } from 'discord.js'
+import { Client, Collection, GatewayIntentBits } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config()
 import fs from 'fs'
 
 const client = new Client({ 
-    intents: [
-        Intents.FLAGS.GUILDS, 
-        Intents.FLAGS.GUILD_MESSAGES, 
-        Intents.FLAGS.DIRECT_MESSAGES, 
-        Intents.FLAGS.GUILD_VOICE_STATES
-    ] 
-})
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.DirectMessages,
+		GatewayIntentBits.GuildVoiceStates
+	]
+});
 
 client.commands = new Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
