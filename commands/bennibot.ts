@@ -6,6 +6,7 @@ import {
 	createAudioResource,
 	joinVoiceChannel,
 } from '@discordjs/voice'
+import Discord from 'discord.js'
 import ytdl from 'ytdl-core-discord'
 import chalk from 'chalk'
 
@@ -71,7 +72,15 @@ module.exports = {
 
 			player.on(AudioPlayerStatus.Idle, () => {
 				console.log('[AutoStop] on "' + interaction.guild.name + '"')
-				const stopped = embeds.stopped(song)
+				const stopped = new Discord.EmbedBuilder()
+				.setColor('#0000ff')
+				.setTitle('BenniBot')
+				.setTimestamp()
+				.addFields({
+					name: 'Stopped playing:',
+					value: 'Leaving the Voice Channel',
+					inline: true,
+				});
 				interaction.followUp({ embeds: [stopped] })
 				connection.destroy()
 			})
