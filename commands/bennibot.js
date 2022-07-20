@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var builders_1 = require("@discordjs/builders");
 var voice_1 = require("@discordjs/voice");
+var discord_js_1 = __importDefault(require("discord.js"));
 var ytdl_core_discord_1 = __importDefault(require("ytdl-core-discord"));
 var chalk_1 = __importDefault(require("chalk"));
 var embeds = require('../handler/embeds');
@@ -55,21 +56,21 @@ module.exports = {
     }),
     execute: function (interaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var songData, song_1, error_1, connection_1, stream, player, resource, playing;
+            var songData, song, error_1, connection_1, stream, player, resource, playing;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         interaction.deferReply();
                         if (!interaction.member.voice.channel) return [3 /*break*/, 6];
                         songData = null;
-                        song_1 = null;
+                        song = null;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, ytdl_core_discord_1.default.getInfo("https://www.youtube.com/watch?v=-A93yVA5aLQ")];
                     case 2:
                         songData = _a.sent();
-                        song_1 = {
+                        song = {
                             title: songData.videoDetails.title,
                             url: songData.videoDetails.video_url,
                             duration: songData.videoDetails.lengthSeconds,
@@ -86,7 +87,7 @@ module.exports = {
                             guildId: interaction.member.guild.id,
                             adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
                         });
-                        return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song_1.url, {
+                        return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song.url, {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
                                 quality: 'highestaudio',
@@ -102,14 +103,22 @@ module.exports = {
                         if (process.env.DEV_MODE === "true") {
                             logger.execute(connection_1, player);
                         }
-                        if (song_1) {
-                            console.log('[Play] ' + chalk_1.default.gray("".concat(song_1.title)) + ' on ' + chalk_1.default.gray("".concat(interaction.guild.name)) + ' by ' + chalk_1.default.gray("".concat(interaction.member.user.username)));
+                        if (song) {
+                            console.log('[Play] ' + chalk_1.default.gray("".concat(song.title)) + ' on ' + chalk_1.default.gray("".concat(interaction.guild.name)) + ' by ' + chalk_1.default.gray("".concat(interaction.member.user.username)));
                         }
-                        playing = embeds.playing(song_1, 0.5);
+                        playing = embeds.playing(song, 0.5);
                         interaction.editReply({ embeds: [playing] });
                         player.on(voice_1.AudioPlayerStatus.Idle, function () {
                             console.log('[AutoStop] on "' + interaction.guild.name + '"');
-                            var stopped = embeds.stopped(song_1);
+                            var stopped = new discord_js_1.default.EmbedBuilder()
+                                .setColor('#0000ff')
+                                .setTitle('BenniBot')
+                                .setTimestamp()
+                                .addFields({
+                                name: 'Stopped playing:',
+                                value: 'Leaving the Voice Channel',
+                                inline: true,
+                            });
                             interaction.followUp({ embeds: [stopped] });
                             connection_1.destroy();
                         });
