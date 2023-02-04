@@ -104,7 +104,7 @@ module.exports = {
                             logger.execute(connection_1, player);
                         }
                         if (song) {
-                            console.log('[Play] ' + chalk_1.default.gray("".concat(song.title)) + ' on ' + chalk_1.default.gray("".concat(interaction.guild.name)) + ' by ' + chalk_1.default.gray("".concat(interaction.member.user.username)));
+                            console.log('[Play] ' + chalk_1.default.gray("" + song.title) + ' on ' + chalk_1.default.gray("" + interaction.guild.name) + ' by ' + chalk_1.default.gray("" + interaction.member.user.username));
                         }
                         playing = embeds.playing(song, 0.5);
                         interaction.editReply({ embeds: [playing] });

@@ -5,3 +5,7 @@ archive
 node_modules
 package-lock.json
 .disabled
+*.js
+Dockerfile
+.dockerignore
+deploy-commands.js
