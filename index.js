@@ -20,8 +20,6 @@ var commandFiles = fs_1.default.readdirSync('./commands').filter(function (file)
 for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
     var file = commandFiles_1[_i];
     var command = require("./commands/" + file);
-    // Set a new item in the Collection
-    // With the key as the command name and the value as the exported module
     client.commands.set(command.data.name, command);
 }
 var eventFiles = fs_1.default.readdirSync('./events').filter(function (file) { return file.endsWith('.js'); });

@@ -13,11 +13,5 @@ module.exports = {
         if (process.env.DEV_MODE === "true") {
             console.log((0, voice_1.generateDependencyReport)());
         }
-        /*
-        Version INFO: <Major.Minor.Revision.Build>
-        - Major is a major update to the software
-        - Minor is a small update to the software
-        - Revision is any change made (bug fixes, small updates)
-        */
     },
 };

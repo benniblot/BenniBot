@@ -70,17 +70,17 @@ module.exports = {
                 switch (_a.label) {
                     case 0:
                         interaction.deferReply();
-                        if (!interaction.member.voice.channel) return [3 /*break*/, 11];
+                        if (!interaction.member.voice.channel) return [3, 11];
                         targetsong = interaction.options.getString('url');
                         YoutubeCheckPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
                         YoutubeCheck = YoutubeCheckPattern.test(interaction.options.getString('url'));
                         songData = null;
                         song_1 = null;
-                        if (!YoutubeCheck) return [3 /*break*/, 5];
+                        if (!YoutubeCheck) return [3, 5];
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(interaction.options.getString('url'))];
+                        return [4, ytdl_core_discord_1.default.getInfo(interaction.options.getString('url'))];
                     case 2:
                         songData = _a.sent();
                         song_1 = {
@@ -89,18 +89,18 @@ module.exports = {
                             duration: songData.videoDetails.lengthSeconds,
                             thumbnail: songData.videoDetails.thumbnails[3].url,
                         };
-                        return [3 /*break*/, 4];
+                        return [3, 4];
                     case 3:
                         error_1 = _a.sent();
                         console.error(Error);
-                        return [3 /*break*/, 4];
-                    case 4: return [3 /*break*/, 9];
+                        return [3, 4];
+                    case 4: return [3, 9];
                     case 5:
                         _a.trys.push([5, 8, , 9]);
-                        return [4 /*yield*/, (0, ytsr_1.default)(targetsong, { "limit": 1 })];
+                        return [4, (0, ytsr_1.default)(targetsong, { "limit": 1 })];
                     case 6:
                         resultId = (_a.sent()).items[0]["url"].split("=");
-                        return [4 /*yield*/, ytdl_core_discord_1.default.getInfo(resultId[1])];
+                        return [4, ytdl_core_discord_1.default.getInfo(resultId[1])];
                     case 7:
                         songData = _a.sent();
                         song_1 = {
@@ -109,18 +109,18 @@ module.exports = {
                             duration: songData.videoDetails.lengthSeconds,
                             thumbnail: songData.videoDetails.thumbnails[3].url,
                         };
-                        return [3 /*break*/, 9];
+                        return [3, 9];
                     case 8:
                         error_2 = _a.sent();
                         console.log(error_2);
-                        return [3 /*break*/, 9];
+                        return [3, 9];
                     case 9:
                         connection_1 = (0, voice_1.joinVoiceChannel)({
                             channelId: interaction.member.voice.channel.id,
                             guildId: interaction.member.guild.id,
                             adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
                         });
-                        return [4 /*yield*/, (0, ytdl_core_discord_1.default)(song_1.url, {
+                        return [4, (0, ytdl_core_discord_1.default)(song_1.url, {
                                 highWaterMark: 1 << 25,
                                 filter: 'audioonly',
                                 quality: 'highestaudio',
@@ -133,7 +133,6 @@ module.exports = {
                         resource.volume.setVolume(volume);
                         connection_1.subscribe(player);
                         player.play(resource);
-                        // Execute the VoiceStateLogger to log the current state of the player when DevMode is true
                         if (process.env.DEV_MODE === "true") {
                             logger.execute(connection_1, player);
                         }
@@ -148,11 +147,11 @@ module.exports = {
                             interaction.followUp({ embeds: [stopped] });
                             connection_1.destroy();
                         });
-                        return [3 /*break*/, 12];
+                        return [3, 12];
                     case 11:
                         interaction.reply({ content: 'You need to join a Voice Channel first!', allowedMentions: { repliedUser: true } });
                         _a.label = 12;
-                    case 12: return [2 /*return*/];
+                    case 12: return [2];
                 }
             });
         });

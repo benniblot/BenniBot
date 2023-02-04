@@ -46,25 +46,25 @@ module.exports = {
                 switch (_a.label) {
                     case 0:
                         if (interaction.type !== discord_js_1.InteractionType.ApplicationCommand)
-                            return [2 /*return*/];
+                            return [2];
                         command = interaction.client.commands.get(interaction.commandName);
                         if (!command)
-                            return [2 /*return*/];
+                            return [2];
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 5]);
-                        return [4 /*yield*/, command.execute(interaction)];
+                        return [4, command.execute(interaction)];
                     case 2:
                         _a.sent();
-                        return [3 /*break*/, 5];
+                        return [3, 5];
                     case 3:
                         error_1 = _a.sent();
                         console.error(error_1);
-                        return [4 /*yield*/, interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })];
+                        return [4, interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })];
                     case 4:
                         _a.sent();
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3, 5];
+                    case 5: return [2];
                 }
             });
         });

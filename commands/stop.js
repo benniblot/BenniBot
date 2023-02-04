@@ -70,7 +70,7 @@ module.exports = {
                 else {
                     interaction.reply({ content: 'You need to join the Voice Channel first!', allowedMentions: { repliedUser: true } });
                 }
-                return [2 /*return*/];
+                return [2];
             });
         });
     },
