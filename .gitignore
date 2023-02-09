@@ -1,11 +1,10 @@
+.vscode
+.disabled
+node_modules
 .eslintrc.json
 .env
-.vscode
-archive
-node_modules
-package-lock.json
-.disabled
 *.js
+package-lock.json
+deploy-commands.ts
 Dockerfile
 .dockerignore
-deploy-commands.js
