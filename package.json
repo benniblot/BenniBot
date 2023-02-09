@@ -1,7 +1,7 @@
 {
   "name": "bennibot",
   "version": "4.4.9",
-  "description": "",
+  "description": "bennibot is a music & multipurpose discord bot written using discordjs",
   "main": "index.js",
   "scripts": {
     "tsc": "tsc -w",
@@ -11,9 +11,9 @@
     "type": "git",
     "url": "git+https://github.com/Benni0109/BenniBot.git"
   },
-  "keywords": [],
-  "author": "Benni0109",
-  "license": "ISC",
+  "keywords": ["typescript", "discord", "discord-js", "discordbot", "musicbotdiscord"],
+  "author": "benniblot",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Benni0109/BenniBot/issues"
   },
