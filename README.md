@@ -27,7 +27,7 @@ If you have any question feels free to contact me :)
 
 ## Member List
 
-- Owner/Developer: <a href="https://github.com/benniblot/">@benniblot</a>
+- Maintainer: <a href="https://github.com/benniblot/">@benniblot</a>
 
 ## Invite BenniBot to your Server
 
