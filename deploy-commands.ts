@@ -1,9 +1,14 @@
-import { REST, Routes, RESTPutAPIApplicationCommandsResult } from 'discord.js';
+import {
+    REST,
+    Routes,
+    RESTPutAPIApplicationCommandsResult
+} from 'discord.js';
 import { clientId, guildId } from './config.json';
 import dotenv from 'dotenv';
 dotenv.config();
 import fs from 'node:fs';
 import path from 'node:path';
+import { CreateLogMessage } from './handler/logger';
 
 const commands: Array<JSON> = [];
 // Grab all the command files from the commands directory you created earlier
@@ -24,7 +29,8 @@ const rest = new REST({ version: '10' }).setToken(process.env.token);
 // and deploy your commands!
 (async () => {
     try {
-        console.log(
+        CreateLogMessage(
+            'Info',
             `Started refreshing ${commands.length} application (/) commands.`
         );
 
@@ -43,11 +49,12 @@ const rest = new REST({ version: '10' }).setToken(process.env.token);
             })) as Array<RESTPutAPIApplicationCommandsResult>;
         }
 
-        console.log(
+        CreateLogMessage(
+            'Info',
             `Successfully reloaded ${data.length} application (/) commands.`
         );
     } catch (error) {
         // And of course, make sure you catch and log any errors!
-        console.error(error);
+        CreateLogMessage('Error', `DeployCommands: ${error.toString()}`);
     }
 })();

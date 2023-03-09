@@ -8,11 +8,10 @@ import {
 } from '@discordjs/voice';
 import { ChatInputCommandInteraction } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
-import ytsr from 'ytsr';
-import chalk from 'chalk';
+import yts from 'yt-search';
 
 import { PlayingEmbed, StoppedEmbed } from '../handler/embeds';
-import { VoiceStateLogger } from '../handler/VoiceStateLogger';
+import { VoiceStateLogger, AudioLogger } from '../handler/logger';
 import { song } from '../index';
 
 module.exports = {
@@ -51,39 +50,24 @@ module.exports = {
             let songData;
             let song: song;
             if (YoutubeCheck) {
-                try {
-                    songData = await ytdl.getInfo(
-                        interaction.options.getString('url')
-                    );
-                    song = {
-                        title: songData.videoDetails.title,
-                        url: songData.videoDetails.video_url,
-                        duration: parseFloat(
-                            songData.videoDetails.lengthSeconds
-                        ),
-                        thumbnail: songData.videoDetails.thumbnails[3].url,
-                    };
-                } catch (error) {
-                    console.error(Error);
-                }
+                songData = await ytdl.getInfo(
+                    interaction.options.getString('url')
+                );
+                song = {
+                    title: songData.videoDetails.title,
+                    url: songData.videoDetails.video_url,
+                    duration: parseFloat(songData.videoDetails.lengthSeconds),
+                    thumbnail: songData.videoDetails.thumbnails[3].url,
+                };
             } else {
-                try {
-                    console.log(
-                        (await ytsr(targetsong, { limit: 1 })).items[0]
-                    );
-                    /*const resultId: string = (
-                        await ytsr(targetsong, { limit: 1 })
-                    ).items[0]['url'].split('=');
-                    songData = await ytdl.getInfo(resultId[1]);
-                    song = {
-                        title: songData.videoDetails.title,
-                        url: songData.videoDetails.video_url,
-                        duration: songData.videoDetails.lengthSeconds,
-                        thumbnail: songData.videoDetails.thumbnails[3].url,
-                    };*/
-                } catch (error) {
-                    console.log(error);
-                }
+                const resultID = (await yts(targetsong)).videos[0].videoId;
+                songData = await ytdl.getInfo(resultID);
+                song = {
+                    title: songData.videoDetails.title,
+                    url: songData.videoDetails.video_url,
+                    duration: parseFloat(songData.videoDetails.lengthSeconds),
+                    thumbnail: songData.videoDetails.thumbnails[3].url,
+                };
             }
 
             const connection = joinVoiceChannel({
@@ -136,22 +120,14 @@ module.exports = {
                 VoiceStateLogger(connection, player);
             }
 
-            // TODO: create custom log handler
             if (song) {
-                console.log(
-                    '[Play] ' +
-                        chalk.gray(`${song.title}`) +
-                        ' on ' +
-                        chalk.gray(`${interaction.guild.name}`) +
-                        ' by ' +
-                        chalk.gray(`${interaction.member.user.username}`)
-                );
+                AudioLogger('Play', interaction, song);
             }
 
             interaction.editReply({ embeds: [PlayingEmbed(song, volume)] });
 
             player.on(AudioPlayerStatus.Idle, () => {
-                console.log('[AutoStop] on "' + interaction.guild.name + '"');
+                AudioLogger('AutoStop', interaction);
                 interaction.followUp({ embeds: [StoppedEmbed(song)] });
                 connection.destroy();
             });

@@ -1,7 +1,8 @@
-import Discord, { ChatInputCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 import { getVoiceConnection } from '@discordjs/voice';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { StoppedEmbed } from '../handler/embeds';
+import { AudioLogger } from '../handler/logger';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,13 +17,7 @@ module.exports = {
             const connection = getVoiceConnection(
                 interaction.member.voice.channel.guild.id
             );
-            console.log(
-                '[Stop] by "' +
-                    interaction.member.user.username +
-                    '" on "' +
-                    interaction.guild.name +
-                    '"'
-            );
+            AudioLogger('Stop', interaction);
             interaction.reply({ embeds: [StoppedEmbed()] });
             if (connection) {
                 connection.destroy();

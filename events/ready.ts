@@ -1,6 +1,7 @@
 import { bot_info } from '../config.json';
 import { generateDependencyReport } from '@discordjs/voice';
 import { Client, ActivityType } from 'discord.js';
+import { CreateLogMessage, StartupLogger } from '../handler/logger';
 
 module.exports = {
     name: 'ready',
@@ -10,15 +11,10 @@ module.exports = {
             type: ActivityType.Playing,
         });
 
-        console.log(
-            `${client.user.tag}` +
-                ' Version ' +
-                bot_info.version +
-                ' started sucessfully!'
-        );
+        StartupLogger(client, bot_info.version);
 
         if (process.env.DEV_MODE === 'true') {
-            console.log(generateDependencyReport());
+            CreateLogMessage('Debug', generateDependencyReport());
         }
 
         /*

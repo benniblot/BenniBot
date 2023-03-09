@@ -8,8 +8,7 @@ import {
 } from '@discordjs/voice';
 import { ChatInputCommandInteraction } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
-import chalk from 'chalk';
-import { VoiceStateLogger } from '../handler/VoiceStateLogger';
+import { VoiceStateLogger, AudioLogger } from '../handler/logger';
 import { song } from '../index';
 
 module.exports = {
@@ -25,25 +24,17 @@ module.exports = {
         interaction.deferReply();
         if (interaction.member.voice.channel) {
             let songData = null;
-            let song: {
-                url: string;
-                title: string;
-                duration: number;
-                thumbnail: string;
-            } = null;
-            try {
-                songData = await ytdl.getInfo(
-                    'https://www.youtube.com/watch?v=-A93yVA5aLQ'
-                );
-                song = {
-                    title: songData.videoDetails.title,
-                    url: songData.videoDetails.video_url,
-                    duration: parseFloat(songData.videoDetails.lengthSeconds),
-                    thumbnail: songData.videoDetails.thumbnails[3].url,
-                };
-            } catch (error) {
-                console.error(Error);
-            }
+            let song: song = null;
+
+            songData = await ytdl.getInfo(
+                'https://www.youtube.com/watch?v=-A93yVA5aLQ'
+            );
+            song = {
+                title: songData.videoDetails.title,
+                url: songData.videoDetails.video_url,
+                duration: parseFloat(songData.videoDetails.lengthSeconds),
+                thumbnail: songData.videoDetails.thumbnails[3].url,
+            };
 
             const connection = joinVoiceChannel({
                 channelId: interaction.member.voice.channel.id,
@@ -74,14 +65,7 @@ module.exports = {
             }
 
             if (song) {
-                console.log(
-                    '[Play] ' +
-                        chalk.gray(`${song.title}`) +
-                        ' on ' +
-                        chalk.gray(`${interaction.guild.name}`) +
-                        ' by ' +
-                        chalk.gray(`${interaction.member.user.username}`)
-                );
+                AudioLogger('Play', interaction, song);
             }
 
             // TODO: create Benbot Embed
@@ -89,7 +73,7 @@ module.exports = {
             interaction.editReply({ content: 'benbot' });
 
             player.on(AudioPlayerStatus.Idle, () => {
-                console.log('[AutoStop] on "' + interaction.guild.name + '"');
+                AudioLogger('AutoStop', interaction);
                 connection.destroy();
             });
         } else {

@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { ChatInputCommandInteraction } from 'discord.js';
 import https from 'https';
+import { ErrorLogger } from '../handler/logger';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,7 +23,7 @@ module.exports = {
                 });
             })
             .on('error', function (e) {
-                console.log('Got an error: ', e);
+                ErrorLogger(e);
             });
     },
 };

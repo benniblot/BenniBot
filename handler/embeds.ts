@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Colors, EmbedBuilder } from 'discord.js';
+import { Colors, EmbedBuilder } from 'discord.js';
 
 type song = {
     duration: number;
