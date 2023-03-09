@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "update": "npm update && npm upgrade && npx depcheck",
-    "buildDocker": "docker build . -t benniblot/bennibot --pull --target arm64"
+    "buildDocker": "docker build . -t benniblot/bennibot --pull --platform linux/arm64"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "@discordjs/builders": "^1.4.0",
     "@discordjs/rest": "^1.5.0",
     "@discordjs/voice": "^0.14.0",
-    "colors": "^1.4.0",
+    "colors": "1.4.0",
     "discord-api-types": "^0.37.35",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
