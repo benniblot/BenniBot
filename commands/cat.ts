@@ -6,7 +6,7 @@ import { ErrorLogger } from '../handler/logger';
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('cat')
-        .setDescription('A random cat phot'),
+        .setDescription('A random cat photo'),
     async execute(interaction: ChatInputCommandInteraction) {
         await interaction.deferReply();
 

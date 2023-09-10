@@ -4,6 +4,7 @@ node_modules
 .eslintrc.json
 .env
 *.js
+*.tar
 package-lock.json
 Dockerfile
 .dockerignore

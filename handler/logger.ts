@@ -1,6 +1,6 @@
 import { AudioPlayer, VoiceConnection } from '@discordjs/voice';
 import { ChatInputCommandInteraction, Client } from 'discord.js';
-import { song } from '../index';
+import { Song } from '../index';
 import colors from 'colors';
 colors.enable();
 
@@ -33,7 +33,7 @@ export function VoiceStateLogger(
 export function AudioLogger(
     state: 'Play' | 'Stop' | 'AutoStop',
     interaction: ChatInputCommandInteraction,
-    song?: song
+    song?: Song
 ) {
     let msg = `${state}: `;
     const username = interaction.member.user.username;

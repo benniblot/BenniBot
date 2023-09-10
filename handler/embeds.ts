@@ -36,9 +36,11 @@ export function PlayingEmbed(song: song, volume: number) {
 export function StoppedEmbed(song?: song) {
     if (song != undefined) {
         return new EmbedBuilder()
+            .setAuthor({ name: 'Stopped playing' })
+            .setTitle(song.title)
+            .setURL(song.url)
             .setColor(Colors.Red)
-            .setTitle('Stopped playing')
-            .setDescription(`[${song.title}](${song.url})`);
+            .setThumbnail(song.thumbnail);
     }
     return new EmbedBuilder()
         .setColor(Colors.Red)
@@ -52,7 +54,7 @@ export function PingEmbed(botLatency: number, wsLatency: number) {
         .setTitle('Pong! :ping_pong:')
         .addFields(
             {
-                name: 'Bot Latency ||Amount it takes for a response from the Bot||',
+                name: 'Bot Latency ||Time it takes for a response from the Bot||',
                 value: `${botLatency} ms`,
             },
             {
@@ -60,4 +62,18 @@ export function PingEmbed(botLatency: number, wsLatency: number) {
                 value: `${wsLatency} ms`,
             }
         );
+}
+
+export function SupportedPlatformsEmbed() {
+    return new EmbedBuilder()
+        .setAuthor({
+            name: 'BenniBlot',
+            iconURL:
+                'https://cdn.discordapp.com/avatars/692296016182902814/98c42fef88491ef6f30692964968a7af?size=1024',
+        })
+        .setTitle('Supported Platforms')
+        .setDescription(
+            '- Youtube (Youtube Music)\n- AppleMusic (Itunes)\n- Spotify\n- Deezer\n- Tidal\n- AmazonMusic'
+        )
+        .setColor(0xffffff);
 }

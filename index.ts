@@ -4,12 +4,48 @@ dotenv.config();
 import fs from 'node:fs';
 import path from 'node:path';
 
-export type song = {
+export type Song = {
     url: string;
     title: string;
     duration: number;
     thumbnail: string;
 };
+
+export type SongLinkAPIResponse = {
+  entityUniqueId: string,
+  userCountry: string,
+  pageUrl: string,
+  linksByPlatform: {
+      [K in Platform]: {
+          entityUniqueId: string;
+          url: string;
+          nativeAppUriMobile?: string;
+          nativeAppUriDesktop?: string;
+      };
+  }
+};
+
+type Platform =
+  | 'spotify'
+  | 'itunes'
+  | 'appleMusic'
+  | 'youtube'
+  | 'youtubeMusic'
+  | 'google'
+  | 'googleStore'
+  | 'pandora'
+  | 'deezer'
+  | 'tidal'
+  | 'amazonStore'
+  | 'amazonMusic'
+  | 'soundcloud'
+  | 'napster'
+  | 'yandex'
+  | 'spinrilla'
+  | 'audius'
+  | 'audiomack'
+  | 'anghami'
+  | 'boomplay';
 
 const client = new Client({
     intents: [

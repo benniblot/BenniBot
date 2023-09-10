@@ -9,7 +9,7 @@ import {
 import { ChatInputCommandInteraction } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
 import { VoiceStateLogger, AudioLogger } from '../handler/logger';
-import { song } from '../index';
+import { Song } from '../index';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,7 +24,7 @@ module.exports = {
         interaction.deferReply();
         if (interaction.member.voice.channel) {
             let songData = null;
-            let song: song = null;
+            let song: Song = null;
 
             songData = await ytdl.getInfo(
                 'https://www.youtube.com/watch?v=-A93yVA5aLQ'

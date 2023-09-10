@@ -9,10 +9,11 @@ import {
 import { ChatInputCommandInteraction } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
 import yts from 'yt-search';
+import axios from 'axios';
 
 import { PlayingEmbed, StoppedEmbed } from '../handler/embeds';
 import { VoiceStateLogger, AudioLogger } from '../handler/logger';
-import { song } from '../index';
+import { Song, SongLinkAPIResponse } from '../index';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,7 +24,7 @@ module.exports = {
         .addStringOption((option) =>
             option
                 .setName('url')
-                .setDescription('YouTube URL or Name of the Song')
+                .setDescription('YouTube URL, Name of the Song or any other supported Link (see /supportedplatforms)')
                 .setRequired(true)
         )
         .addNumberOption((option) =>
@@ -39,36 +40,41 @@ module.exports = {
     async execute(interaction: ChatInputCommandInteraction) {
         if (!interaction.inCachedGuild()) return;
 
-        interaction.deferReply();
         if (interaction.member.voice.channel) {
+            interaction.deferReply();
             const targetsong: string = interaction.options.getString('url');
             const YoutubeCheckPattern =
                 /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
+            const URLCheckPattern = /^(http|https):\/\/[^ "]+$/gi;
             const YoutubeCheck = YoutubeCheckPattern.test(
                 interaction.options.getString('url')
             );
             let songData;
-            let song: song;
+            let song: Song;
             if (YoutubeCheck) {
                 songData = await ytdl.getInfo(
                     interaction.options.getString('url')
                 );
-                song = {
-                    title: songData.videoDetails.title,
-                    url: songData.videoDetails.video_url,
-                    duration: parseFloat(songData.videoDetails.lengthSeconds),
-                    thumbnail: songData.videoDetails.thumbnails[3].url,
-                };
-            } else {
+            } else if (URLCheckPattern.test(interaction.options.getString('url'))) {
+                let songlinkAPIResponse = await axios.get(`https://api.song.link/v1-alpha.1/links?url=${encodeURIComponent(interaction.options.getString('url'))}`);
+                let ResponseJSONData: SongLinkAPIResponse = JSON.parse(JSON.stringify(songlinkAPIResponse.data));
+                if(ResponseJSONData.linksByPlatform.youtube == undefined) {
+                    interaction.editReply({
+                        content: 'Sorry but I wasn\'t able to find this song on YouTube, try by using the name of the song instead of the link'
+                    });
+                    return;
+                }
+                songData = await ytdl.getInfo(ResponseJSONData.linksByPlatform.youtube.entityUniqueId.split("::")[1])
+            } else  {
                 const resultID = (await yts(targetsong)).videos[0].videoId;
                 songData = await ytdl.getInfo(resultID);
-                song = {
-                    title: songData.videoDetails.title,
-                    url: songData.videoDetails.video_url,
-                    duration: parseFloat(songData.videoDetails.lengthSeconds),
-                    thumbnail: songData.videoDetails.thumbnails[3].url,
-                };
             }
+            song = {
+                title: songData.videoDetails.title,
+                url: songData.videoDetails.video_url,
+                duration: parseFloat(songData.videoDetails.lengthSeconds),
+                thumbnail: songData.videoDetails.thumbnails[3].url,
+            };
 
             const connection = joinVoiceChannel({
                 channelId: interaction.member.voice.channel.id,
